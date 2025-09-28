@@ -1,0 +1,96 @@
+{
+  "drugs": [
+    {
+      "name": "Warfarin",
+      "drug_class": "Anticoagulant",
+      "mechanism": "Vitamin K antagonist",
+      "common_uses": "Prevention of blood clots",
+      "interactions_profile": "High bleeding risk with NSAIDs and antiplatelet agents"
+    },
+    {
+      "name": "Aspirin",
+      "drug_class": "NSAID/Antiplatelet",
+      "mechanism": "COX inhibitor",
+      "common_uses": "Pain relief and antiplatelet therapy",
+      "interactions_profile": "Increases bleeding risk with anticoagulants"
+    },
+    {
+      "name": "Ibuprofen",
+      "drug_class": "NSAID",
+      "mechanism": "COX inhibitor",
+      "common_uses": "Pain and inflammation relief",
+      "interactions_profile": "Bleeding risk with anticoagulants"
+    },
+    {
+      "name": "Acetaminophen",
+      "drug_class": "Analgesic",
+      "mechanism": "Unknown analgesic mechanism",
+      "common_uses": "Pain and fever relief",
+      "interactions_profile": "Generally safe with most medications"
+    },
+    {
+      "name": "Metformin",
+      "drug_class": "Antidiabetic",
+      "mechanism": "Glucose metabolism modulator",
+      "common_uses": "Type 2 diabetes management",
+      "interactions_profile": "Monitor with contrast agents"
+    },
+    {
+      "name": "Atorvastatin",
+      "drug_class": "Statin",
+      "mechanism": "HMG-CoA reductase inhibitor",
+      "common_uses": "Cholesterol management",
+      "interactions_profile": "Muscle toxicity with certain drugs"
+    }
+  ],
+  "interactions": [
+    {
+      "drug_a": "warfarin",
+      "drug_b": "aspirin",
+      "severity": "severe",
+      "description": "Increased bleeding risk due to combined anticoagulant and antiplatelet effects",
+      "mechanism": "Additive bleeding effects",
+      "recommendation": "Monitor INR closely, consider alternative analgesics"
+    },
+    {
+      "drug_a": "warfarin",
+      "drug_b": "ibuprofen",
+      "severity": "severe",
+      "description": "Significant bleeding risk with NSAID and anticoagulant combination",
+      "mechanism": "Enhanced anticoagulation",
+      "recommendation": "Avoid combination if possible, use acetaminophen instead"
+    },
+    {
+      "drug_a": "aspirin",
+      "drug_b": "ibuprofen",
+      "severity": "moderate",
+      "description": "Increased GI bleeding risk with dual NSAID therapy",
+      "mechanism": "Additive GI toxicity",
+      "recommendation": "Use lowest effective doses, consider gastroprotection"
+    },
+    {
+      "drug_a": "metformin",
+      "drug_b": "acetaminophen",
+      "severity": "mild",
+      "description": "No significant interaction between these medications",
+      "mechanism": "Different metabolic pathways",
+      "recommendation": "Continue monitoring as usual"
+    },
+    {
+      "drug_a": "atorvastatin",
+      "drug_b": "acetaminophen",
+      "severity": "mild",
+      "description": "No clinically significant interaction",
+      "mechanism": "Different metabolic pathways",
+      "recommendation": "Safe to use together"
+    },
+    {
+      "drug_a": "warfarin",
+      "drug_b": "acetaminophen",
+      "severity": "mild",
+      "description": "Minimal interaction, safe for short-term use",
+      "mechanism": "Limited interference with coagulation",
+      "recommendation": "Safe alternative for pain relief"
+    }
+  ]
+}
