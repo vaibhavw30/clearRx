@@ -1,0 +1,99 @@
+from __future__ import annotations
+
+import json
+import os
+import time
+from typing import Callable
+
+from pydantic import BaseModel
+
+from app.eval.dataset import EvalQuery
+from app.eval.judge import Judge
+from app.eval.metrics import (
+    ndcg_at_k, percentile, precision_at_k, recall_at_k,
+    reciprocal_rank, retrieval_coverage,
+)
+from app.rag.pipeline import RagPipeline
+
+
+def _mean(xs: list[float]) -> float:
+    return sum(xs) / len(xs) if xs else 0.0
+
+
+class EvalReport(BaseModel):
+    aggregate: dict
+    per_query: list[dict]
+
+    def to_markdown(self) -> str:
+        lines = ["| metric | value |", "| --- | --- |"]
+        for key, val in self.aggregate.items():
+            lines.append(f"| {key} | {round(val, 4)} |")
+        return "\n".join(lines) + "\n"
+
+    def write(self, reports_dir: str, run_id: str) -> tuple[str, str]:
+        os.makedirs(reports_dir, exist_ok=True)
+        json_path = os.path.join(reports_dir, f"{run_id}.json")
+        md_path = os.path.join(reports_dir, f"{run_id}.md")
+        with open(json_path, "w", encoding="utf-8") as fh:
+            json.dump(self.model_dump(), fh, indent=2)
+        with open(md_path, "w", encoding="utf-8") as fh:
+            fh.write(self.to_markdown())
+        return json_path, md_path
+
+
+class EvalRunner:
+    def __init__(
+        self,
+        pipeline: RagPipeline,
+        judge: Judge,
+        k: int = 5,
+        clock: Callable[[], float] = time.perf_counter,
+    ) -> None:
+        self.pipeline = pipeline
+        self.judge = judge
+        self.k = k
+        self.clock = clock
+
+    def run(self, queries: list[EvalQuery]) -> EvalReport:
+        rows: list[dict] = []
+        latencies: list[float] = []
+        for q in queries:
+            start = self.clock()
+            chunks = self.pipeline.retrieve(q.query, self.k)
+            answer = self.pipeline.generate(q.query, chunks)
+            latency_ms = (self.clock() - start) * 1000.0
+            latencies.append(latency_ms)
+
+            retrieved_ids = [c.source_doc_id for c in chunks]
+            relevant = set(q.expected_doc_ids)
+            facts = self.judge.score_facts(answer, q.expected_answer_facts)
+            forbidden = self.judge.check_forbidden(answer, q.must_not_say)
+            rows.append(
+                {
+                    "id": q.id,
+                    "retrieval_coverage": retrieval_coverage(
+                        q.expected_retrieval_topics, [c.text for c in chunks]
+                    ),
+                    "precision_at_k": precision_at_k(retrieved_ids, relevant, self.k),
+                    "recall_at_k": recall_at_k(retrieved_ids, relevant, self.k),
+                    "mrr": reciprocal_rank(retrieved_ids, relevant),
+                    "ndcg": ndcg_at_k(retrieved_ids, relevant, self.k),
+                    "fact_coverage": _mean([1.0 if f else 0.0 for f in facts]),
+                    "forbidden_violations": sum(1 for v in forbidden if v),
+                    "latency_ms": latency_ms,
+                    "answer": answer,
+                }
+            )
+
+        aggregate = {
+            "retrieval_coverage": _mean([r["retrieval_coverage"] for r in rows]),
+            "precision_at_k": _mean([r["precision_at_k"] for r in rows]),
+            "recall_at_k": _mean([r["recall_at_k"] for r in rows]),
+            "mrr": _mean([r["mrr"] for r in rows]),
+            "ndcg": _mean([r["ndcg"] for r in rows]),
+            "fact_coverage": _mean([r["fact_coverage"] for r in rows]),
+            "forbidden_violations": float(sum(r["forbidden_violations"] for r in rows)),
+            "latency_ms_p50": percentile(latencies, 50),
+            "latency_ms_p95": percentile(latencies, 95),
+        }
+        return EvalReport(aggregate=aggregate, per_query=rows)
