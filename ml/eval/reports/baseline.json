@@ -1,0 +1,171 @@
+{
+  "aggregate": {
+    "retrieval_coverage": 0.7692307692307693,
+    "precision_at_k": 0.28846153846153844,
+    "recall_at_k": 0.9230769230769231,
+    "mrr": 0.8846153846153846,
+    "ndcg": 0.8946869041208814,
+    "fact_coverage": 0.0,
+    "forbidden_violations": 0.0,
+    "latency_ms_p50": 0.20933400000000546,
+    "latency_ms_p95": 0.24235839999999226
+  },
+  "per_query": [
+    {
+      "id": "q001",
+      "retrieval_coverage": 1.0,
+      "precision_at_k": 0.25,
+      "recall_at_k": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.2634579999999942,
+      "answer": "Based on the available information: Combining warfarin with ibuprofen substantially increases the risk of serious bleeding, including gastrointestinal hemorrhage. This pairing should generally be avoided. Ibuprofen inhibits platelet cyclooxygenase, reducing platelet aggregation, and irritates the gastric mucosa. Warfarin inhibits synthesis of vitamin K dependent clotting factors. The effects on hemostasis are additive, and NSAIDs can also displace warfarin from plasma proteins. Regular ibuprofen can blunt the cardioprotective antiplatelet effect of low-dose aspirin, and combining the two also raises gastrointestinal bleeding risk. Combining the SSRI fluoxetine with the MAOI phenelzine can cause serotonin syndrome, a potentially fatal reaction. The combination is contraindicated and requires a washout period. Combining lisinopril with spironolactone can cause dangerous hyperkalemia, especially in patients with renal impairment, diabetes, or advanced age."
+    },
+    {
+      "id": "q002",
+      "retrieval_coverage": 1.0,
+      "precision_at_k": 0.25,
+      "recall_at_k": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.21716699999999034,
+      "answer": "Based on the available information: Taking aspirin together with warfarin markedly raises the risk of major bleeding. The combination is only used when a specific cardiovascular indication justifies it, under close supervision. Both drugs increase cyclic GMP mediated vasodilation. Nitrates donate nitric oxide to raise cGMP, while sildenafil blocks phosphodiesterase-5 that degrades cGMP. The result is exaggerated, additive vasodilation and a steep fall in blood pressure. Aspirin irreversibly inhibits platelet cyclooxygenase-1, impairing platelet aggregation for the life of the platelet, while warfarin suppresses vitamin K dependent clotting factors. Aspirin additionally damages the gastric mucosa, compounding gastrointestinal bleeding risk. Iodinated contrast can precipitate acute kidney injury, and impaired renal clearance of metformin may then lead to metformin-associated lactic acidosis. Metformin is typically held around contrast administration in at-risk patients. Ibuprofen competitively binds the same cyclooxygenase-1 active site that aspirin needs to acetylate. When ibuprofen occupies the site first, aspirin cannot irreversibly inhibit the platelet, reducing its antiplatelet benefit. Both drugs independently injure the gastric mucosa."
+    },
+    {
+      "id": "q003",
+      "retrieval_coverage": 0.5,
+      "precision_at_k": 0.3333333333333333,
+      "recall_at_k": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.20933400000000546,
+      "answer": "Based on the available information: Regular ibuprofen can blunt the cardioprotective antiplatelet effect of low-dose aspirin, and combining the two also raises gastrointestinal bleeding risk. Higher rates of gastrointestinal and intracranial hemorrhage compared with either agent alone. Even low-dose aspirin contributes meaningfully to bleeding risk. Reserve combined use for clear indications such as a mechanical heart valve or recent coronary stent, at the lowest aspirin dose. Otherwise avoid concurrent aspirin and consider gastroprotection. Use the combination cautiously with a clear indication such as heart failure. Start with low doses, avoid potassium supplements and salt substitutes, and correct volume depletion. Taking aspirin together with warfarin markedly raises the risk of major bleeding. The combination is only used when a specific cardiovascular indication justifies it, under close supervision."
+    },
+    {
+      "id": "q004",
+      "retrieval_coverage": 1.0,
+      "precision_at_k": 0.25,
+      "recall_at_k": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.20912500000000445,
+      "answer": "Based on the available information: Clarithromycin sharply raises atorvastatin blood levels, increasing the risk of muscle toxicity including rhabdomyolysis and acute kidney injury. Avoid the combination. Suspend atorvastatin during a short course of clarithromycin, or choose an antibiotic that does not inhibit CYP3A4 such as azithromycin. If co-administration is unavoidable, cap the atorvastatin dose. Avoid the combination when possible. Prefer acetaminophen for analgesia. If an NSAID is unavoidable, use the lowest effective dose for the shortest duration and add gastroprotection such as a proton pump inhibitor. Assess for gastrointestinal symptoms and reconsider the analgesic choice in patients relying on aspirin for cardiovascular prevention. During any transition, watch for early features of serotonin syndrome such as tremor, sweating, and agitation."
+    },
+    {
+      "id": "q005",
+      "retrieval_coverage": 1.0,
+      "precision_at_k": 0.3333333333333333,
+      "recall_at_k": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.20666600000000812,
+      "answer": "Based on the available information: Check renal function before restarting metformin after contrast exposure, particularly in patients with pre-existing chronic kidney disease. In patients with reduced eGFR, withhold metformin at the time of contrast and for 48 hours afterward, resuming only after renal function is confirmed stable. Ensure adequate hydration around the procedure. Combining the SSRI fluoxetine with the MAOI phenelzine can cause serotonin syndrome, a potentially fatal reaction. The combination is contraindicated and requires a washout period. Iodinated contrast can precipitate acute kidney injury, and impaired renal clearance of metformin may then lead to metformin-associated lactic acidosis. Metformin is typically held around contrast administration in at-risk patients. Taking aspirin together with warfarin markedly raises the risk of major bleeding. The combination is only used when a specific cardiovascular indication justifies it, under close supervision."
+    },
+    {
+      "id": "q006",
+      "retrieval_coverage": 0.0,
+      "precision_at_k": 0.0,
+      "recall_at_k": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.20475000000000354,
+      "answer": "Based on the available information: Iodinated contrast can precipitate acute kidney injury, and impaired renal clearance of metformin may then lead to metformin-associated lactic acidosis. Metformin is typically held around contrast administration in at-risk patients. Contrast media can cause contrast-induced nephropathy. Because metformin is cleared renally and is not metabolized, reduced kidney function causes metformin to accumulate, promoting lactate buildup and metabolic acidosis. Both drugs increase cyclic GMP mediated vasodilation. Nitrates donate nitric oxide to raise cGMP, while sildenafil blocks phosphodiesterase-5 that degrades cGMP. The result is exaggerated, additive vasodilation and a steep fall in blood pressure. Counsel the patient to report muscle symptoms immediately and check creatine kinase if myopathy is suspected. Combining the SSRI fluoxetine with the MAOI phenelzine can cause serotonin syndrome, a potentially fatal reaction. The combination is contraindicated and requires a washout period."
+    },
+    {
+      "id": "q007",
+      "retrieval_coverage": 1.0,
+      "precision_at_k": 0.25,
+      "recall_at_k": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.2078329999999906,
+      "answer": "Based on the available information: Do not co-administer. Nitrates should be avoided within 24 hours of sildenafil and within 48 hours of tadalafil. In nitrate-treated chest pain occurring after PDE5 inhibitor use, use alternative anti-ischemic therapy and supportive care. Avoid the combination when possible. Prefer acetaminophen for analgesia. If an NSAID is unavoidable, use the lowest effective dose for the shortest duration and add gastroprotection such as a proton pump inhibitor. Sildenafil taken with any nitrate can cause profound, potentially fatal hypotension. This combination is contraindicated. If both are needed, take immediate-release aspirin at least 30 minutes before ibuprofen, or wait at least 8 hours after ibuprofen before dosing aspirin. Prefer acetaminophen when aspirin cardioprotection matters. Reserve combined use for clear indications such as a mechanical heart valve or recent coronary stent, at the lowest aspirin dose. Otherwise avoid concurrent aspirin and consider gastroprotection."
+    },
+    {
+      "id": "q008",
+      "retrieval_coverage": 1.0,
+      "precision_at_k": 0.25,
+      "recall_at_k": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.20625000000000504,
+      "answer": "Based on the available information: Combining the SSRI fluoxetine with the MAOI phenelzine can cause serotonin syndrome, a potentially fatal reaction. The combination is contraindicated and requires a washout period. Fluoxetine blocks serotonin reuptake while phenelzine inhibits monoamine oxidase, the enzyme that degrades serotonin. Together they cause excessive synaptic serotonin accumulation and overstimulation of serotonin receptors. Sildenafil taken with any nitrate can cause profound, potentially fatal hypotension. This combination is contraindicated. Taking aspirin together with warfarin markedly raises the risk of major bleeding. The combination is only used when a specific cardiovascular indication justifies it, under close supervision. Combining warfarin with ibuprofen substantially increases the risk of serious bleeding, including gastrointestinal hemorrhage. This pairing should generally be avoided."
+    },
+    {
+      "id": "q009",
+      "retrieval_coverage": 0.5,
+      "precision_at_k": 0.5,
+      "recall_at_k": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.20683400000000296,
+      "answer": "Based on the available information: Ibuprofen inhibits platelet cyclooxygenase, reducing platelet aggregation, and irritates the gastric mucosa. Warfarin inhibits synthesis of vitamin K dependent clotting factors. The effects on hemostasis are additive, and NSAIDs can also displace warfarin from plasma proteins. If both are needed, take immediate-release aspirin at least 30 minutes before ibuprofen, or wait at least 8 hours after ibuprofen before dosing aspirin. Prefer acetaminophen when aspirin cardioprotection matters. Regular ibuprofen can blunt the cardioprotective antiplatelet effect of low-dose aspirin, and combining the two also raises gastrointestinal bleeding risk. Combining warfarin with ibuprofen substantially increases the risk of serious bleeding, including gastrointestinal hemorrhage. This pairing should generally be avoided. Potential loss of aspirin's cardiovascular protection when ibuprofen is taken chronically before aspirin, plus additive gastrointestinal irritation and bleeding risk."
+    },
+    {
+      "id": "q010",
+      "retrieval_coverage": 1.0,
+      "precision_at_k": 0.3333333333333333,
+      "recall_at_k": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.210542000000008,
+      "answer": "Based on the available information: Avoid the combination. Suspend atorvastatin during a short course of clarithromycin, or choose an antibiotic that does not inhibit CYP3A4 such as azithromycin. If co-administration is unavoidable, cap the atorvastatin dose. Clarithromycin is a potent inhibitor of the CYP3A4 enzyme that metabolizes atorvastatin. Inhibition reduces statin clearance, causing atorvastatin plasma concentrations to rise several-fold. Clarithromycin sharply raises atorvastatin blood levels, increasing the risk of muscle toxicity including rhabdomyolysis and acute kidney injury. Combining warfarin with ibuprofen substantially increases the risk of serious bleeding, including gastrointestinal hemorrhage. This pairing should generally be avoided. Do not co-administer. Nitrates should be avoided within 24 hours of sildenafil and within 48 hours of tadalafil. In nitrate-treated chest pain occurring after PDE5 inhibitor use, use alternative anti-ischemic therapy and supportive care."
+    },
+    {
+      "id": "q011",
+      "retrieval_coverage": 0.5,
+      "precision_at_k": 0.25,
+      "recall_at_k": 1.0,
+      "mrr": 0.5,
+      "ndcg": 0.6309297535714575,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.2218330000000046,
+      "answer": "Based on the available information: Fluoxetine blocks serotonin reuptake while phenelzine inhibits monoamine oxidase, the enzyme that degrades serotonin. Together they cause excessive synaptic serotonin accumulation and overstimulation of serotonin receptors. Both drugs increase cyclic GMP mediated vasodilation. Nitrates donate nitric oxide to raise cGMP, while sildenafil blocks phosphodiesterase-5 that degrades cGMP. The result is exaggerated, additive vasodilation and a steep fall in blood pressure. Ibuprofen inhibits platelet cyclooxygenase, reducing platelet aggregation, and irritates the gastric mucosa. Warfarin inhibits synthesis of vitamin K dependent clotting factors. The effects on hemostasis are additive, and NSAIDs can also displace warfarin from plasma proteins. If hypotension occurs, place the patient supine, give intravenous fluids, and support blood pressure; nitrates are not an option for rescue. Regular ibuprofen can blunt the cardioprotective antiplatelet effect of low-dose aspirin, and combining the two also raises gastrointestinal bleeding risk."
+    },
+    {
+      "id": "q012",
+      "retrieval_coverage": 1.0,
+      "precision_at_k": 0.5,
+      "recall_at_k": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.22829199999999106,
+      "answer": "Based on the available information: Iodinated contrast can precipitate acute kidney injury, and impaired renal clearance of metformin may then lead to metformin-associated lactic acidosis. Metformin is typically held around contrast administration in at-risk patients. Contrast media can cause contrast-induced nephropathy. Because metformin is cleared renally and is not metabolized, reduced kidney function causes metformin to accumulate, promoting lactate buildup and metabolic acidosis. In patients with reduced eGFR, withhold metformin at the time of contrast and for 48 hours afterward, resuming only after renal function is confirmed stable. Ensure adequate hydration around the procedure. Check renal function before restarting metformin after contrast exposure, particularly in patients with pre-existing chronic kidney disease. Hyperkalemia that may be asymptomatic until severe, when it can cause muscle weakness, cardiac conduction abnormalities, and life-threatening arrhythmias."
+    },
+    {
+      "id": "q013",
+      "retrieval_coverage": 0.5,
+      "precision_at_k": 0.25,
+      "recall_at_k": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "fact_coverage": 0.0,
+      "forbidden_violations": 0,
+      "latency_ms": 0.22295799999999533,
+      "answer": "Based on the available information: Lisinopril reduces aldosterone by blocking angiotensin converting enzyme, decreasing potassium excretion. Spironolactone independently blocks aldosterone receptors in the distal nephron. Together they additively raise serum potassium. Both drugs increase cyclic GMP mediated vasodilation. Nitrates donate nitric oxide to raise cGMP, while sildenafil blocks phosphodiesterase-5 that degrades cGMP. The result is exaggerated, additive vasodilation and a steep fall in blood pressure. Combining the SSRI fluoxetine with the MAOI phenelzine can cause serotonin syndrome, a potentially fatal reaction. The combination is contraindicated and requires a washout period. Combining lisinopril with spironolactone can cause dangerous hyperkalemia, especially in patients with renal impairment, diabetes, or advanced age. Iodinated contrast can precipitate acute kidney injury, and impaired renal clearance of metformin may then lead to metformin-associated lactic acidosis. Metformin is typically held around contrast administration in at-risk patients."
+    }
+  ]
+}

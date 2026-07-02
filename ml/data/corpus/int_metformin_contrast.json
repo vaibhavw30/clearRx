@@ -1,0 +1,20 @@
+{
+  "id": "int_metformin_contrast",
+  "drug_a": "metformin",
+  "drug_b": "iodinated contrast",
+  "drug_a_aliases": ["glucophage", "fortamet"],
+  "drug_b_aliases": ["contrast dye", "iodinated contrast media", "iohexol", "iodixanol"],
+  "drug_class_a": "antidiabetic (biguanide)",
+  "drug_class_b": "radiographic contrast agent",
+  "severity": "moderate",
+  "sections": {
+    "summary": "Iodinated contrast can precipitate acute kidney injury, and impaired renal clearance of metformin may then lead to metformin-associated lactic acidosis. Metformin is typically held around contrast administration in at-risk patients.",
+    "mechanism": "Contrast media can cause contrast-induced nephropathy. Because metformin is cleared renally and is not metabolized, reduced kidney function causes metformin to accumulate, promoting lactate buildup and metabolic acidosis.",
+    "clinical_effects": "Nausea, vomiting, abdominal pain, hyperventilation, and lethargy from lactic acidosis; rising creatinine from contrast nephropathy.",
+    "management": "In patients with reduced eGFR, withhold metformin at the time of contrast and for 48 hours afterward, resuming only after renal function is confirmed stable. Ensure adequate hydration around the procedure.",
+    "monitoring": "Check renal function before restarting metformin after contrast exposure, particularly in patients with pre-existing chronic kidney disease."
+  },
+  "evidence": [
+    {"citation": "ACR Manual on Contrast Media, 2023", "url": "https://www.acr.org/Clinical-Resources/Contrast-Manual"}
+  ]
+}

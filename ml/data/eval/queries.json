@@ -1,0 +1,182 @@
+{
+  "queries": [
+    {
+      "id": "q001",
+      "query": "Can I take ibuprofen with my warfarin prescription?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_warfarin_ibuprofen"],
+      "expected_retrieval_topics": ["bleeding", "nsaid"],
+      "expected_answer_facts": [
+        "Increased bleeding risk",
+        "NSAIDs reduce platelet function",
+        "Monitor INR if combined"
+      ],
+      "must_not_say": ["safe to combine", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q002",
+      "query": "Is it dangerous to use aspirin while on warfarin?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_warfarin_aspirin"],
+      "expected_retrieval_topics": ["bleeding", "antiplatelet"],
+      "expected_answer_facts": [
+        "Major bleeding risk",
+        "Aspirin irreversibly inhibits platelets",
+        "Reserve for specific cardiovascular indications"
+      ],
+      "must_not_say": ["safe to combine", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q003",
+      "query": "Does ibuprofen interfere with low-dose aspirin for my heart?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_aspirin_ibuprofen"],
+      "expected_retrieval_topics": ["cardioprotective", "cyclooxygenase"],
+      "expected_answer_facts": [
+        "Ibuprofen can blunt aspirin's antiplatelet effect",
+        "Take aspirin before ibuprofen or separate the doses"
+      ],
+      "must_not_say": ["no interaction"],
+      "severity": "moderate"
+    },
+    {
+      "id": "q004",
+      "query": "I am on atorvastatin and was prescribed clarithromycin for an infection. Any concern?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_atorvastatin_clarithromycin"],
+      "expected_retrieval_topics": ["cyp3a4", "rhabdomyolysis"],
+      "expected_answer_facts": [
+        "Clarithromycin raises atorvastatin levels via CYP3A4 inhibition",
+        "Risk of muscle toxicity and rhabdomyolysis",
+        "Hold statin or use a non-interacting antibiotic"
+      ],
+      "must_not_say": ["safe to combine", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q005",
+      "query": "Should I stop metformin before a CT scan with contrast dye?",
+      "query_type": "contraindication",
+      "expected_doc_ids": ["int_metformin_contrast"],
+      "expected_retrieval_topics": ["lactic acidosis", "kidney"],
+      "expected_answer_facts": [
+        "Contrast can cause kidney injury",
+        "Metformin may accumulate and cause lactic acidosis",
+        "Withhold metformin around contrast in at-risk patients"
+      ],
+      "must_not_say": ["no interaction"],
+      "severity": "moderate"
+    },
+    {
+      "id": "q006",
+      "query": "Is it safe to combine lisinopril and spironolactone?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_lisinopril_spironolactone"],
+      "expected_retrieval_topics": ["hyperkalemia", "potassium"],
+      "expected_answer_facts": [
+        "Risk of hyperkalemia",
+        "Both drugs raise potassium via aldosterone",
+        "Monitor serum potassium and renal function"
+      ],
+      "must_not_say": ["no interaction"],
+      "severity": "moderate"
+    },
+    {
+      "id": "q007",
+      "query": "Can I take sildenafil if I use nitroglycerin for chest pain?",
+      "query_type": "contraindication",
+      "expected_doc_ids": ["int_sildenafil_nitroglycerin"],
+      "expected_retrieval_topics": ["hypotension", "contraindicated"],
+      "expected_answer_facts": [
+        "Contraindicated combination",
+        "Risk of profound hypotension",
+        "Both increase cGMP-mediated vasodilation"
+      ],
+      "must_not_say": ["safe to combine", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q008",
+      "query": "Can fluoxetine be taken together with the MAOI phenelzine?",
+      "query_type": "contraindication",
+      "expected_doc_ids": ["int_fluoxetine_phenelzine"],
+      "expected_retrieval_topics": ["serotonin syndrome", "washout"],
+      "expected_answer_facts": [
+        "Contraindicated due to serotonin syndrome risk",
+        "Requires a washout period between the drugs",
+        "Excess synaptic serotonin accumulation"
+      ],
+      "must_not_say": ["safe to combine", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q009",
+      "query": "What happens if I take warfarin and ibuprofen and how do I stay safe?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_warfarin_ibuprofen"],
+      "expected_retrieval_topics": ["gastroprotection", "acetaminophen"],
+      "expected_answer_facts": [
+        "Increased bleeding risk",
+        "Prefer acetaminophen for pain",
+        "Use gastroprotection if an NSAID is needed"
+      ],
+      "must_not_say": ["safe to combine"],
+      "severity": "high"
+    },
+    {
+      "id": "q010",
+      "query": "How should atorvastatin be dosed during a course of clarithromycin?",
+      "query_type": "dosage",
+      "expected_doc_ids": ["int_atorvastatin_clarithromycin"],
+      "expected_retrieval_topics": ["suspend", "dose"],
+      "expected_answer_facts": [
+        "Suspend atorvastatin during clarithromycin, or cap the dose",
+        "Consider azithromycin as an alternative antibiotic"
+      ],
+      "must_not_say": ["no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q011",
+      "query": "Nitroglycerin and sildenafil together, what are the risks?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_sildenafil_nitroglycerin"],
+      "expected_retrieval_topics": ["vasodilation", "syncope"],
+      "expected_answer_facts": [
+        "Severe additive hypotension",
+        "Avoid nitrates within 24 hours of sildenafil"
+      ],
+      "must_not_say": ["safe to combine"],
+      "severity": "high"
+    },
+    {
+      "id": "q012",
+      "query": "When can I restart metformin after receiving iodinated contrast?",
+      "query_type": "dosage",
+      "expected_doc_ids": ["int_metformin_contrast"],
+      "expected_retrieval_topics": ["renal function", "48 hours"],
+      "expected_answer_facts": [
+        "Resume metformin after renal function is confirmed stable",
+        "Typically held for 48 hours after contrast in at-risk patients"
+      ],
+      "must_not_say": ["no interaction"],
+      "severity": "moderate"
+    },
+    {
+      "id": "q013",
+      "query": "Why do lisinopril and spironolactone raise potassium and how is it monitored?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_lisinopril_spironolactone"],
+      "expected_retrieval_topics": ["aldosterone", "arrhythmia"],
+      "expected_answer_facts": [
+        "Both drugs reduce potassium excretion via aldosterone",
+        "Hyperkalemia can cause cardiac arrhythmias",
+        "Check potassium within a week of changes"
+      ],
+      "must_not_say": ["no interaction"],
+      "severity": "moderate"
+    }
+  ]
+}

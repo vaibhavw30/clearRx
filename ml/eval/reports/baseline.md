@@ -1,0 +1,11 @@
+| metric | value |
+| --- | --- |
+| retrieval_coverage | 0.7692 |
+| precision_at_k | 0.2885 |
+| recall_at_k | 0.9231 |
+| mrr | 0.8846 |
+| ndcg | 0.8947 |
+| fact_coverage | 0.0 |
+| forbidden_violations | 0.0 |
+| latency_ms_p50 | 0.2093 |
+| latency_ms_p95 | 0.2424 |

@@ -20,6 +20,19 @@ def _mean(xs: list[float]) -> float:
     return sum(xs) / len(xs) if xs else 0.0
 
 
+def _distinct_doc_ids(chunks) -> list[str]:
+    """Collapse retrieved chunks to distinct source docs in first-seen order.
+    Relevance is judged at the document level, so doc-level ranking metrics
+    must see each document once, at the rank of its best (first) chunk."""
+    ordered: list[str] = []
+    seen: set[str] = set()
+    for c in chunks:
+        if c.source_doc_id not in seen:
+            seen.add(c.source_doc_id)
+            ordered.append(c.source_doc_id)
+    return ordered
+
+
 class EvalReport(BaseModel):
     aggregate: dict
     per_query: list[dict]
@@ -64,7 +77,7 @@ class EvalRunner:
             latency_ms = (self.clock() - start) * 1000.0
             latencies.append(latency_ms)
 
-            retrieved_ids = [c.source_doc_id for c in chunks]
+            retrieved_ids = _distinct_doc_ids(chunks)
             relevant = set(q.expected_doc_ids)
             facts = self.judge.score_facts(answer, q.expected_answer_facts)
             forbidden = self.judge.check_forbidden(answer, q.must_not_say)

@@ -1,0 +1,20 @@
+{
+  "id": "int_aspirin_ibuprofen",
+  "drug_a": "aspirin",
+  "drug_b": "ibuprofen",
+  "drug_a_aliases": ["acetylsalicylic acid", "asa", "bayer"],
+  "drug_b_aliases": ["advil", "motrin", "nurofen"],
+  "drug_class_a": "antiplatelet",
+  "drug_class_b": "nsaid",
+  "severity": "moderate",
+  "sections": {
+    "summary": "Regular ibuprofen can blunt the cardioprotective antiplatelet effect of low-dose aspirin, and combining the two also raises gastrointestinal bleeding risk.",
+    "mechanism": "Ibuprofen competitively binds the same cyclooxygenase-1 active site that aspirin needs to acetylate. When ibuprofen occupies the site first, aspirin cannot irreversibly inhibit the platelet, reducing its antiplatelet benefit. Both drugs independently injure the gastric mucosa.",
+    "clinical_effects": "Potential loss of aspirin's cardiovascular protection when ibuprofen is taken chronically before aspirin, plus additive gastrointestinal irritation and bleeding risk.",
+    "management": "If both are needed, take immediate-release aspirin at least 30 minutes before ibuprofen, or wait at least 8 hours after ibuprofen before dosing aspirin. Prefer acetaminophen when aspirin cardioprotection matters.",
+    "monitoring": "Assess for gastrointestinal symptoms and reconsider the analgesic choice in patients relying on aspirin for cardiovascular prevention."
+  },
+  "evidence": [
+    {"citation": "FDA Drug Safety Communication, 2006", "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/information-drug-class-nonsteroidal-anti-inflammatory-drugs"}
+  ]
+}

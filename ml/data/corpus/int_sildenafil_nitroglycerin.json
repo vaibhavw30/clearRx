@@ -1,0 +1,20 @@
+{
+  "id": "int_sildenafil_nitroglycerin",
+  "drug_a": "sildenafil",
+  "drug_b": "nitroglycerin",
+  "drug_a_aliases": ["viagra", "revatio"],
+  "drug_b_aliases": ["nitrostat", "glyceryl trinitrate", "gtn", "nitrates"],
+  "drug_class_a": "pde5 inhibitor",
+  "drug_class_b": "nitrate vasodilator",
+  "severity": "high",
+  "sections": {
+    "summary": "Sildenafil taken with any nitrate can cause profound, potentially fatal hypotension. This combination is contraindicated.",
+    "mechanism": "Both drugs increase cyclic GMP mediated vasodilation. Nitrates donate nitric oxide to raise cGMP, while sildenafil blocks phosphodiesterase-5 that degrades cGMP. The result is exaggerated, additive vasodilation and a steep fall in blood pressure.",
+    "clinical_effects": "Severe hypotension, dizziness, syncope, reflex tachycardia, and risk of myocardial or cerebral ischemia.",
+    "management": "Do not co-administer. Nitrates should be avoided within 24 hours of sildenafil and within 48 hours of tadalafil. In nitrate-treated chest pain occurring after PDE5 inhibitor use, use alternative anti-ischemic therapy and supportive care.",
+    "monitoring": "If hypotension occurs, place the patient supine, give intravenous fluids, and support blood pressure; nitrates are not an option for rescue."
+  },
+  "evidence": [
+    {"citation": "Cheitlin MD, et al. ACC/AHA Expert Consensus. Circulation. 1999;99(1):168-177", "url": "https://pubmed.ncbi.nlm.nih.gov/9884399/"}
+  ]
+}

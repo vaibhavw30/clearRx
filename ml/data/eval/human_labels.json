@@ -1,0 +1,34 @@
+{
+  "labels": [
+    {
+      "query_id": "q001",
+      "answer": "Ibuprofen and warfarin together raise the risk of bleeding. You should monitor your INR closely if you use them together.",
+      "human_fact_labels": [true, false, true]
+    },
+    {
+      "query_id": "q002",
+      "answer": "Aspirin with warfarin can cause major bleeding and is usually only combined for a specific heart indication.",
+      "human_fact_labels": [true, false, true]
+    },
+    {
+      "query_id": "q004",
+      "answer": "Clarithromycin inhibits CYP3A4 and raises atorvastatin levels, which can cause muscle damage and rhabdomyolysis. The statin should be held.",
+      "human_fact_labels": [true, true, true]
+    },
+    {
+      "query_id": "q005",
+      "answer": "Contrast dye can harm the kidneys, and metformin should be paused around the scan in at-risk patients.",
+      "human_fact_labels": [true, false, true]
+    },
+    {
+      "query_id": "q007",
+      "answer": "No. Sildenafil with nitroglycerin is contraindicated because it can cause a dangerous drop in blood pressure.",
+      "human_fact_labels": [true, true, false]
+    },
+    {
+      "query_id": "q008",
+      "answer": "Fluoxetine and phenelzine must not be combined; the pairing can trigger serotonin syndrome and needs a washout period between them.",
+      "human_fact_labels": [true, true, false]
+    }
+  ]
+}

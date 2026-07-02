@@ -54,6 +54,32 @@ def test_run_computes_perfect_scores():
     assert agg["latency_ms_p50"] == 10.0
 
 
+class MultiChunkSameDocPipeline:
+    """Real corpora produce several chunks per document, so retrieval returns
+    the same doc id repeated. Doc-level ranking metrics must not double-count."""
+
+    def retrieve(self, query, k):
+        return [
+            Chunk(text="a", source_doc_id="int_warfarin_ibuprofen", section="summary", chunk_index=0),
+            Chunk(text="b", source_doc_id="int_warfarin_ibuprofen", section="mechanism", chunk_index=1),
+            Chunk(text="c", source_doc_id="int_warfarin_ibuprofen", section="management", chunk_index=2),
+        ]
+
+    def generate(self, query, chunks):
+        return "answer"
+
+
+def test_duplicate_doc_chunks_do_not_inflate_ranking_metrics():
+    runner = EvalRunner(MultiChunkSameDocPipeline(), FakeJudge(), k=5, clock=lambda: 0.0)
+    report = runner.run([_query()])
+    agg = report.aggregate
+    assert agg["ndcg"] <= 1.0
+    assert agg["ndcg"] == 1.0            # the one relevant doc is ranked first
+    assert agg["precision_at_k"] == 1.0  # one distinct doc, and it is relevant
+    assert agg["recall_at_k"] == 1.0
+    assert agg["mrr"] == 1.0
+
+
 def test_write_report_creates_files(tmp_path):
     runner = EvalRunner(FakePipeline(), FakeJudge(), k=5, clock=lambda: 0.0)
     report = runner.run([_query()])

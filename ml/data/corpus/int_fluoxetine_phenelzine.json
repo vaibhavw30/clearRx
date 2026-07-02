@@ -1,0 +1,20 @@
+{
+  "id": "int_fluoxetine_phenelzine",
+  "drug_a": "fluoxetine",
+  "drug_b": "phenelzine",
+  "drug_a_aliases": ["prozac", "ssri"],
+  "drug_b_aliases": ["nardil", "maoi", "monoamine oxidase inhibitor"],
+  "drug_class_a": "ssri antidepressant",
+  "drug_class_b": "maoi antidepressant",
+  "severity": "high",
+  "sections": {
+    "summary": "Combining the SSRI fluoxetine with the MAOI phenelzine can cause serotonin syndrome, a potentially fatal reaction. The combination is contraindicated and requires a washout period.",
+    "mechanism": "Fluoxetine blocks serotonin reuptake while phenelzine inhibits monoamine oxidase, the enzyme that degrades serotonin. Together they cause excessive synaptic serotonin accumulation and overstimulation of serotonin receptors.",
+    "clinical_effects": "Agitation, confusion, hyperthermia, tachycardia, hypertension, rigidity, myoclonus, and hyperreflexia; severe cases progress to seizures, disseminated intravascular coagulation, and death.",
+    "management": "Never co-administer. Because of fluoxetine's long half-life, allow at least 5 weeks after stopping fluoxetine before starting an MAOI, and at least 14 days after stopping an MAOI before starting an SSRI. Treat suspected serotonin syndrome with discontinuation, cooling, benzodiazepines, and cyproheptadine.",
+    "monitoring": "During any transition, watch for early features of serotonin syndrome such as tremor, sweating, and agitation."
+  },
+  "evidence": [
+    {"citation": "Boyer EW, Shannon M. N Engl J Med. 2005;352(11):1112-1120", "url": "https://pubmed.ncbi.nlm.nih.gov/15784664/"}
+  ]
+}

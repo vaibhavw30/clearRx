@@ -1,0 +1,20 @@
+{
+  "id": "int_lisinopril_spironolactone",
+  "drug_a": "lisinopril",
+  "drug_b": "spironolactone",
+  "drug_a_aliases": ["prinivil", "zestril"],
+  "drug_b_aliases": ["aldactone"],
+  "drug_class_a": "ace inhibitor",
+  "drug_class_b": "potassium-sparing diuretic",
+  "severity": "moderate",
+  "sections": {
+    "summary": "Combining lisinopril with spironolactone can cause dangerous hyperkalemia, especially in patients with renal impairment, diabetes, or advanced age.",
+    "mechanism": "Lisinopril reduces aldosterone by blocking angiotensin converting enzyme, decreasing potassium excretion. Spironolactone independently blocks aldosterone receptors in the distal nephron. Together they additively raise serum potassium.",
+    "clinical_effects": "Hyperkalemia that may be asymptomatic until severe, when it can cause muscle weakness, cardiac conduction abnormalities, and life-threatening arrhythmias.",
+    "management": "Use the combination cautiously with a clear indication such as heart failure. Start with low doses, avoid potassium supplements and salt substitutes, and correct volume depletion.",
+    "monitoring": "Check serum potassium and renal function within one week of starting or adjusting either drug, then periodically thereafter."
+  },
+  "evidence": [
+    {"citation": "Juurlink DN, et al. N Engl J Med. 2004;351(6):543-551", "url": "https://pubmed.ncbi.nlm.nih.gov/15295047/"}
+  ]
+}

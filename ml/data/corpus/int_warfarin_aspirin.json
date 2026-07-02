@@ -1,0 +1,20 @@
+{
+  "id": "int_warfarin_aspirin",
+  "drug_a": "warfarin",
+  "drug_b": "aspirin",
+  "drug_a_aliases": ["coumadin", "jantoven"],
+  "drug_b_aliases": ["acetylsalicylic acid", "asa", "bayer"],
+  "drug_class_a": "anticoagulant",
+  "drug_class_b": "antiplatelet",
+  "severity": "high",
+  "sections": {
+    "summary": "Taking aspirin together with warfarin markedly raises the risk of major bleeding. The combination is only used when a specific cardiovascular indication justifies it, under close supervision.",
+    "mechanism": "Aspirin irreversibly inhibits platelet cyclooxygenase-1, impairing platelet aggregation for the life of the platelet, while warfarin suppresses vitamin K dependent clotting factors. Aspirin additionally damages the gastric mucosa, compounding gastrointestinal bleeding risk.",
+    "clinical_effects": "Higher rates of gastrointestinal and intracranial hemorrhage compared with either agent alone. Even low-dose aspirin contributes meaningfully to bleeding risk.",
+    "management": "Reserve combined use for clear indications such as a mechanical heart valve or recent coronary stent, at the lowest aspirin dose. Otherwise avoid concurrent aspirin and consider gastroprotection.",
+    "monitoring": "Monitor INR closely and watch for anemia, melena, or other bleeding signs. Reassess the ongoing need for dual therapy regularly."
+  },
+  "evidence": [
+    {"citation": "Dentali F, et al. Arch Intern Med. 2007;167(2):117-124", "url": "https://pubmed.ncbi.nlm.nih.gov/17242311/"}
+  ]
+}

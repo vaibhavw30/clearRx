@@ -1,0 +1,20 @@
+{
+  "id": "int_atorvastatin_clarithromycin",
+  "drug_a": "atorvastatin",
+  "drug_b": "clarithromycin",
+  "drug_a_aliases": ["lipitor"],
+  "drug_b_aliases": ["biaxin"],
+  "drug_class_a": "statin",
+  "drug_class_b": "macrolide antibiotic",
+  "severity": "high",
+  "sections": {
+    "summary": "Clarithromycin sharply raises atorvastatin blood levels, increasing the risk of muscle toxicity including rhabdomyolysis and acute kidney injury.",
+    "mechanism": "Clarithromycin is a potent inhibitor of the CYP3A4 enzyme that metabolizes atorvastatin. Inhibition reduces statin clearance, causing atorvastatin plasma concentrations to rise several-fold.",
+    "clinical_effects": "Muscle pain, weakness, and tenderness; elevated creatine kinase; and in severe cases rhabdomyolysis with myoglobinuria and renal failure.",
+    "management": "Avoid the combination. Suspend atorvastatin during a short course of clarithromycin, or choose an antibiotic that does not inhibit CYP3A4 such as azithromycin. If co-administration is unavoidable, cap the atorvastatin dose.",
+    "monitoring": "Counsel the patient to report muscle symptoms immediately and check creatine kinase if myopathy is suspected."
+  },
+  "evidence": [
+    {"citation": "Patel AM, et al. Ann Intern Med. 2013;158(12):869-876", "url": "https://pubmed.ncbi.nlm.nih.gov/23778904/"}
+  ]
+}

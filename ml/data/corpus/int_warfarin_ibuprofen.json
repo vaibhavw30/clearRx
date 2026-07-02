@@ -1,0 +1,20 @@
+{
+  "id": "int_warfarin_ibuprofen",
+  "drug_a": "warfarin",
+  "drug_b": "ibuprofen",
+  "drug_a_aliases": ["coumadin", "jantoven"],
+  "drug_b_aliases": ["advil", "motrin", "nurofen"],
+  "drug_class_a": "anticoagulant",
+  "drug_class_b": "nsaid",
+  "severity": "high",
+  "sections": {
+    "summary": "Combining warfarin with ibuprofen substantially increases the risk of serious bleeding, including gastrointestinal hemorrhage. This pairing should generally be avoided.",
+    "mechanism": "Ibuprofen inhibits platelet cyclooxygenase, reducing platelet aggregation, and irritates the gastric mucosa. Warfarin inhibits synthesis of vitamin K dependent clotting factors. The effects on hemostasis are additive, and NSAIDs can also displace warfarin from plasma proteins.",
+    "clinical_effects": "Increased bruising, gastrointestinal bleeding, hematuria, and prolonged bleeding time. Bleeding risk is elevated even when the INR remains within the target range.",
+    "management": "Avoid the combination when possible. Prefer acetaminophen for analgesia. If an NSAID is unavoidable, use the lowest effective dose for the shortest duration and add gastroprotection such as a proton pump inhibitor.",
+    "monitoring": "Check INR more frequently after starting or stopping ibuprofen, and counsel the patient to report any signs of bleeding promptly."
+  },
+  "evidence": [
+    {"citation": "Battistella M, et al. Arch Intern Med. 2005;165(2):189-192", "url": "https://pubmed.ncbi.nlm.nih.gov/15668365/"}
+  ]
+}
