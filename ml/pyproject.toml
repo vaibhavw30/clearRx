@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+markers = [
+    "unit: fast tests using fakes only",
+    "integration: hits real Pinecone/Cohere/Ollama; skipped without keys",
+    "api: FastAPI endpoint tests",
+    "eval: eval-regression threshold tests",
+]
