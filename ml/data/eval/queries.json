@@ -177,6 +177,438 @@
       ],
       "must_not_say": ["no interaction"],
       "severity": "moderate"
+    },
+    {
+      "id": "q014",
+      "query": "Is it safe to take Cordarone with my Coumadin?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_warfarin_amiodarone"],
+      "expected_retrieval_topics": ["warfarin amiodarone interaction", "INR increase"],
+      "expected_answer_facts": [
+        "Amiodarone increases the INR",
+        "Warfarin dose usually needs reduction",
+        "Monitor INR more frequently"
+      ],
+      "must_not_say": ["no interaction", "safe to combine at normal doses"],
+      "severity": "high"
+    },
+    {
+      "id": "q015",
+      "query": "My doctor prescribed Zyloprim and I'm already on Imuran, is that okay?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_allopurinol_azathioprine"],
+      "expected_retrieval_topics": ["xanthine oxidase", "bone marrow suppression"],
+      "expected_answer_facts": [
+        "Allopurinol blocks a major metabolic pathway for azathioprine",
+        "Risk of severe bone marrow suppression",
+        "Azathioprine dose should be reduced substantially"
+      ],
+      "must_not_say": ["no interaction", "safe at normal doses"],
+      "severity": "high"
+    },
+    {
+      "id": "q016",
+      "query": "Can I take Biaxin while I'm on Lipitor?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_atorvastatin_clarithromycin"],
+      "expected_retrieval_topics": ["cyp3a4", "rhabdomyolysis"],
+      "expected_answer_facts": [
+        "Clarithromycin raises atorvastatin levels via CYP3A4 inhibition",
+        "Risk of muscle toxicity and rhabdomyolysis",
+        "Hold statin or use a non-interacting antibiotic"
+      ],
+      "must_not_say": ["no interaction", "safe to combine"],
+      "severity": "high"
+    },
+    {
+      "id": "q017",
+      "query": "Is Zanaflex dangerous if I'm taking Cipro for a UTI?",
+      "query_type": "contraindication",
+      "expected_doc_ids": ["int_ciprofloxacin_tizanidine"],
+      "expected_retrieval_topics": ["cyp1a2 inhibition", "hypotension"],
+      "expected_answer_facts": [
+        "Ciprofloxacin dramatically raises tizanidine plasma levels",
+        "Can cause profound hypotension and sedation",
+        "The combination is contraindicated"
+      ],
+      "must_not_say": ["safe to combine", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q018",
+      "query": "I take Plavix daily but my doctor wants me on Prilosec too, is that a problem?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_clopidogrel_omeprazole"],
+      "expected_retrieval_topics": ["cyp2c19 inhibition", "antiplatelet effect"],
+      "expected_answer_facts": [
+        "Omeprazole can blunt clopidogrel's antiplatelet effect",
+        "Omeprazole inhibits CYP2C19 needed to activate clopidogrel",
+        "A PPI with less CYP2C19 inhibition like pantoprazole is preferred"
+      ],
+      "must_not_say": ["no interaction"],
+      "severity": "moderate"
+    },
+    {
+      "id": "q019",
+      "query": "Will Cordarone affect my Lanoxin levels?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_digoxin_amiodarone"],
+      "expected_retrieval_topics": ["p-glycoprotein inhibition", "digoxin toxicity"],
+      "expected_answer_facts": [
+        "Amiodarone roughly doubles digoxin serum concentrations",
+        "Digoxin dose should be reduced by about half when amiodarone is started",
+        "Risk of digoxin toxicity including arrhythmias"
+      ],
+      "must_not_say": ["no interaction", "safe to combine at normal doses"],
+      "severity": "high"
+    },
+    {
+      "id": "q020",
+      "query": "Is Calan safe to add to my Lanoxin regimen?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_digoxin_verapamil"],
+      "expected_retrieval_topics": ["p-glycoprotein inhibition", "av nodal block"],
+      "expected_answer_facts": [
+        "Verapamil raises digoxin plasma concentrations",
+        "Verapamil independently slows AV nodal conduction",
+        "Digoxin dose often needs reduction, roughly by half"
+      ],
+      "must_not_say": ["no interaction", "safe to combine"],
+      "severity": "high"
+    },
+    {
+      "id": "q021",
+      "query": "My psychiatrist wants to start Zyvox while I'm on Zoloft, is that risky?",
+      "query_type": "contraindication",
+      "expected_doc_ids": ["int_linezolid_sertraline"],
+      "expected_retrieval_topics": ["monoamine oxidase inhibition", "serotonin syndrome"],
+      "expected_answer_facts": [
+        "Linezolid is a reversible monoamine oxidase inhibitor",
+        "Combining it with sertraline carries a serious risk of serotonin syndrome",
+        "The combination is generally contraindicated"
+      ],
+      "must_not_say": ["safe to combine", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q022",
+      "query": "Can I take Microzide along with my Lithobid?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_lithium_hydrochlorothiazide"],
+      "expected_retrieval_topics": ["renal lithium clearance", "lithium toxicity"],
+      "expected_answer_facts": [
+        "Thiazide diuretics reduce renal lithium clearance",
+        "Can precipitate lithium toxicity within days",
+        "Lithium dose should be reduced preemptively if a thiazide is added"
+      ],
+      "must_not_say": ["no interaction", "safe to combine"],
+      "severity": "high"
+    },
+    {
+      "id": "q023",
+      "query": "Is it okay to use Advil regularly while I'm on Eskalith?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_lithium_ibuprofen"],
+      "expected_retrieval_topics": ["renal prostaglandin inhibition", "lithium levels"],
+      "expected_answer_facts": [
+        "Regular NSAID use can raise serum lithium levels",
+        "Ibuprofen reduces renal clearance of lithium",
+        "Acetaminophen is preferred for analgesia in patients on lithium"
+      ],
+      "must_not_say": ["no interaction", "safe to use regularly"],
+      "severity": "moderate"
+    },
+    {
+      "id": "q024",
+      "query": "Why can't I take Bactrim while I'm on methotrexate for my arthritis?",
+      "query_type": "contraindication",
+      "expected_doc_ids": ["int_methotrexate_trimethoprim"],
+      "expected_retrieval_topics": ["dihydrofolate reductase inhibition", "bone marrow suppression"],
+      "expected_answer_facts": [
+        "Trimethoprim and methotrexate both inhibit dihydrofolate reductase",
+        "The antifolate effects are additive and can cause severe bone marrow suppression",
+        "An alternative antibiotic should be selected when possible"
+      ],
+      "must_not_say": ["safe to combine", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q025",
+      "query": "Can Toprol-XL and Calan be prescribed together?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_metoprolol_verapamil"],
+      "expected_retrieval_topics": ["av nodal suppression", "bradycardia"],
+      "expected_answer_facts": [
+        "Additive suppression of AV nodal conduction and contractility",
+        "Risk of severe bradycardia, heart block, or hypotension",
+        "Verapamil also raises metoprolol levels via CYP2D6 inhibition"
+      ],
+      "must_not_say": ["no interaction", "safe to combine"],
+      "severity": "high"
+    },
+    {
+      "id": "q026",
+      "query": "I have a cold and want to use Sudafed, but I take Nardil for depression. Is that safe?",
+      "query_type": "contraindication",
+      "expected_doc_ids": ["int_phenelzine_pseudoephedrine"],
+      "expected_retrieval_topics": ["norepinephrine release", "hypertensive crisis"],
+      "expected_answer_facts": [
+        "Pseudoephedrine combined with phenelzine can trigger a hypertensive crisis",
+        "The combination is considered contraindicated",
+        "Non-sympathomimetic alternatives should be used for congestion"
+      ],
+      "must_not_say": ["safe to combine", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q027",
+      "query": "Does Rifadin reduce how well my birth control pills work?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_rifampin_ethinylestradiol"],
+      "expected_retrieval_topics": ["enzyme induction", "contraceptive failure"],
+      "expected_answer_facts": [
+        "Rifampin strongly induces the metabolism of ethinylestradiol",
+        "This can lower contraceptive hormone levels and cause breakthrough bleeding",
+        "An additional non-hormonal contraceptive method is advised during treatment"
+      ],
+      "must_not_say": ["no interaction", "safe to rely on the pill alone"],
+      "severity": "moderate"
+    },
+    {
+      "id": "q028",
+      "query": "Is taking Zoloft with Advil for my back pain a bad idea?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_sertraline_ibuprofen"],
+      "expected_retrieval_topics": ["platelet aggregation", "gi bleeding risk"],
+      "expected_answer_facts": [
+        "Combining sertraline with ibuprofen increases gastrointestinal bleeding risk",
+        "SSRIs impair platelet aggregation while NSAIDs irritate the gastric mucosa",
+        "Acetaminophen is preferred for analgesia when possible"
+      ],
+      "must_not_say": ["no interaction"],
+      "severity": "moderate"
+    },
+    {
+      "id": "q029",
+      "query": "My doctor prescribed Ultram for pain but I already take Zoloft, should I be worried?",
+      "query_type": "contraindication",
+      "expected_doc_ids": ["int_sertraline_tramadol"],
+      "expected_retrieval_topics": ["serotonergic activity", "serotonin syndrome"],
+      "expected_answer_facts": [
+        "Tramadol has serotonergic activity in addition to its opioid effect",
+        "Combining sertraline with tramadol increases the risk of serotonin syndrome",
+        "Tramadol also lowers the seizure threshold"
+      ],
+      "must_not_say": ["safe to combine", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q030",
+      "query": "Can I take Zocor with Lopid for my cholesterol and triglycerides?",
+      "query_type": "contraindication",
+      "expected_doc_ids": ["int_simvastatin_gemfibrozil"],
+      "expected_retrieval_topics": ["glucuronidation inhibition", "rhabdomyolysis"],
+      "expected_answer_facts": [
+        "Gemfibrozil greatly increases simvastatin plasma levels",
+        "Risk of myopathy and rhabdomyolysis",
+        "The combination is contraindicated"
+      ],
+      "must_not_say": ["safe to combine", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q031",
+      "query": "Will Cipro raise my Theo-24 levels too high?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_theophylline_ciprofloxacin"],
+      "expected_retrieval_topics": ["cyp1a2 inhibition", "theophylline toxicity"],
+      "expected_answer_facts": [
+        "Ciprofloxacin inhibits theophylline clearance via CYP1A2",
+        "Theophylline levels can rise substantially and cause toxicity",
+        "Theophylline dose should be reduced preemptively if ciprofloxacin is needed"
+      ],
+      "must_not_say": ["no interaction", "safe to combine"],
+      "severity": "high"
+    },
+    {
+      "id": "q032",
+      "query": "My INR jumped after starting Diflucan while on Coumadin, is that expected?",
+      "query_type": "interaction",
+      "expected_doc_ids": ["int_warfarin_fluconazole"],
+      "expected_retrieval_topics": ["cyp2c9 inhibition", "INR rise"],
+      "expected_answer_facts": [
+        "Fluconazole causes a rapid and pronounced rise in INR",
+        "Fluconazole potently inhibits CYP2C9, which clears warfarin",
+        "Warfarin dose often needs reduction of 25-50 percent"
+      ],
+      "must_not_say": ["no interaction", "unrelated to the antifungal"],
+      "severity": "high"
+    },
+    {
+      "id": "q033",
+      "query": "Should I worry about taking Tegretol with Biaxin for my sinus infection?",
+      "query_type": "contraindication",
+      "expected_doc_ids": ["int_carbamazepine_clarithromycin"],
+      "expected_retrieval_topics": ["cyp3a4 inhibition", "carbamazepine toxicity"],
+      "expected_answer_facts": [
+        "Clarithromycin strongly inhibits carbamazepine metabolism",
+        "Carbamazepine toxicity can develop within a few days",
+        "Azithromycin is a reasonable alternative macrolide"
+      ],
+      "must_not_say": ["safe to combine", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q034",
+      "query": "What dose adjustment does Imuran need if allopurinol is started?",
+      "query_type": "dosage",
+      "expected_doc_ids": ["int_allopurinol_azathioprine"],
+      "expected_retrieval_topics": ["dose reduction", "blood counts"],
+      "expected_answer_facts": [
+        "Reduce the azathioprine dose to about 25-33% of the original when allopurinol is started",
+        "Adjust further based on blood counts and clinical response"
+      ],
+      "must_not_say": ["no dose change needed"],
+      "severity": "high"
+    },
+    {
+      "id": "q035",
+      "query": "How much should my digoxin dose change when I start verapamil?",
+      "query_type": "dosage",
+      "expected_doc_ids": ["int_digoxin_verapamil"],
+      "expected_retrieval_topics": ["dose reduction", "digoxin level"],
+      "expected_answer_facts": [
+        "Digoxin dose is often reduced by about half when verapamil is started",
+        "Retitrate based on digoxin levels and clinical response"
+      ],
+      "must_not_say": ["no dose change needed", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q036",
+      "query": "What INR monitoring schedule is needed after starting amiodarone with Jantoven?",
+      "query_type": "dosage",
+      "expected_doc_ids": ["int_warfarin_amiodarone"],
+      "expected_retrieval_topics": ["INR monitoring", "dose reduction"],
+      "expected_answer_facts": [
+        "Anticipate a warfarin dose reduction of roughly 30-50 percent when starting amiodarone",
+        "Check INR weekly for the first several weeks after starting or stopping amiodarone"
+      ],
+      "must_not_say": ["no monitoring needed", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "q037",
+      "query": "Do I need to lower my lithium dose if my doctor adds hydrochlorothiazide?",
+      "query_type": "dosage",
+      "expected_doc_ids": ["int_lithium_hydrochlorothiazide"],
+      "expected_retrieval_topics": ["dose reduction", "lithium level monitoring"],
+      "expected_answer_facts": [
+        "Lithium dose is often reduced by 25-50 percent if a thiazide must be added",
+        "Check serum lithium level within about 5-7 days of the change"
+      ],
+      "must_not_say": ["no dose change needed", "no interaction"],
+      "severity": "high"
+    },
+    {
+      "id": "n001",
+      "query": "Can I take amoxicillin with acetaminophen?",
+      "query_type": "no_interaction",
+      "expected_doc_ids": [],
+      "expected_retrieval_topics": [],
+      "expected_answer_facts": ["No clinically significant interaction is expected"],
+      "must_not_say": ["dangerous interaction", "avoid this combination", "serious bleeding"],
+      "severity": "low"
+    },
+    {
+      "id": "n002",
+      "query": "Is it safe to take lisinopril together with acetaminophen for a headache?",
+      "query_type": "no_interaction",
+      "expected_doc_ids": [],
+      "expected_retrieval_topics": [],
+      "expected_answer_facts": ["No clinically significant interaction is expected"],
+      "must_not_say": ["dangerous interaction", "avoid this combination", "contraindicated"],
+      "severity": "low"
+    },
+    {
+      "id": "n003",
+      "query": "Can I take metformin with loratadine for my allergies?",
+      "query_type": "no_interaction",
+      "expected_doc_ids": [],
+      "expected_retrieval_topics": [],
+      "expected_answer_facts": ["No clinically significant interaction is expected"],
+      "must_not_say": ["dangerous interaction", "avoid this combination", "lactic acidosis risk"],
+      "severity": "low"
+    },
+    {
+      "id": "n004",
+      "query": "Is it okay to combine atorvastatin with acetaminophen occasionally?",
+      "query_type": "no_interaction",
+      "expected_doc_ids": [],
+      "expected_retrieval_topics": [],
+      "expected_answer_facts": ["No clinically significant interaction is expected"],
+      "must_not_say": ["dangerous interaction", "avoid this combination", "rhabdomyolysis risk"],
+      "severity": "low"
+    },
+    {
+      "id": "n005",
+      "query": "Can I take levothyroxine along with vitamin D supplements?",
+      "query_type": "no_interaction",
+      "expected_doc_ids": [],
+      "expected_retrieval_topics": [],
+      "expected_answer_facts": ["No clinically significant interaction is expected"],
+      "must_not_say": ["dangerous interaction", "avoid this combination", "serious bleeding"],
+      "severity": "low"
+    },
+    {
+      "id": "n006",
+      "query": "Is it safe to take amlodipine with acetaminophen for a fever?",
+      "query_type": "no_interaction",
+      "expected_doc_ids": [],
+      "expected_retrieval_topics": [],
+      "expected_answer_facts": ["No clinically significant interaction is expected"],
+      "must_not_say": ["dangerous interaction", "avoid this combination", "hypotension crisis"],
+      "severity": "low"
+    },
+    {
+      "id": "n007",
+      "query": "Can I take metformin with amoxicillin for a sinus infection?",
+      "query_type": "no_interaction",
+      "expected_doc_ids": [],
+      "expected_retrieval_topics": [],
+      "expected_answer_facts": ["No clinically significant interaction is expected"],
+      "must_not_say": ["dangerous interaction", "avoid this combination", "lactic acidosis risk"],
+      "severity": "low"
+    },
+    {
+      "id": "n008",
+      "query": "Is omeprazole safe to take with acetaminophen?",
+      "query_type": "no_interaction",
+      "expected_doc_ids": [],
+      "expected_retrieval_topics": [],
+      "expected_answer_facts": ["No clinically significant interaction is expected"],
+      "must_not_say": ["dangerous interaction", "avoid this combination", "serious bleeding"],
+      "severity": "low"
+    },
+    {
+      "id": "n009",
+      "query": "Can I take loratadine along with lisinopril for seasonal allergies?",
+      "query_type": "no_interaction",
+      "expected_doc_ids": [],
+      "expected_retrieval_topics": [],
+      "expected_answer_facts": ["No clinically significant interaction is expected"],
+      "must_not_say": ["dangerous interaction", "avoid this combination", "hyperkalemia risk"],
+      "severity": "low"
+    },
+    {
+      "id": "n010",
+      "query": "Is it fine to take acetaminophen while I'm on levothyroxine and metformin?",
+      "query_type": "no_interaction",
+      "expected_doc_ids": [],
+      "expected_retrieval_topics": [],
+      "expected_answer_facts": ["No clinically significant interaction is expected"],
+      "must_not_say": ["dangerous interaction", "avoid this combination", "serious toxicity"],
+      "severity": "low"
     }
   ]
 }

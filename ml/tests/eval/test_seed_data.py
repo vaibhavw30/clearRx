@@ -42,3 +42,29 @@ def test_baseline_runs_end_to_end_offline():
     assert 0.0 <= report.aggregate["recall_at_k"] <= 1.0
     # the keyword baseline should retrieve the right doc for most queries
     assert report.aggregate["recall_at_k"] > 0.4
+
+
+def test_query_set_size_and_shape():
+    queries = load_queries("data/eval/queries.json")
+    assert len(queries) >= 40
+    by_type = {}
+    for q in queries:
+        by_type.setdefault(q.query_type, 0)
+        by_type[q.query_type] += 1
+    assert by_type.get("no_interaction", 0) >= 8, "need negative queries for precision"
+    # every non-negative query names at least one gold doc
+    for q in queries:
+        if q.query_type != "no_interaction":
+            assert q.expected_doc_ids, f"{q.id} has no gold doc"
+
+
+def test_human_labels_align_with_queries():
+    import json
+    queries = {q.id: q for q in load_queries("data/eval/queries.json")}
+    labels = json.load(open("data/eval/human_labels.json"))["labels"]
+    assert len(labels) >= 15
+    for lab in labels:
+        q = queries[lab["query_id"]]
+        assert len(lab["human_fact_labels"]) == len(q.expected_answer_facts), (
+            f"{lab['query_id']} label length != expected_answer_facts length"
+        )

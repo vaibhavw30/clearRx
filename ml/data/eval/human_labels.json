@@ -29,6 +29,71 @@
       "query_id": "q008",
       "answer": "Fluoxetine and phenelzine must not be combined; the pairing can trigger serotonin syndrome and needs a washout period between them.",
       "human_fact_labels": [true, true, false]
+    },
+    {
+      "query_id": "q014",
+      "answer": "Amiodarone raises your INR, so your warfarin dose usually has to be lowered and your INR checked more often.",
+      "human_fact_labels": [true, true, true]
+    },
+    {
+      "query_id": "q015",
+      "answer": "Allopurinol blocks the breakdown of azathioprine, which can lead to bone marrow suppression. Your azathioprine dose typically needs to be cut substantially.",
+      "human_fact_labels": [true, true, true]
+    },
+    {
+      "query_id": "q017",
+      "answer": "Yes, this is dangerous. Ciprofloxacin sharply raises tizanidine levels and the combination is not recommended.",
+      "human_fact_labels": [true, false, true]
+    },
+    {
+      "query_id": "q018",
+      "answer": "Prilosec can reduce how well Plavix works because it blocks the enzyme needed to activate it. Pantoprazole is often used instead.",
+      "human_fact_labels": [true, true, true]
+    },
+    {
+      "query_id": "q019",
+      "answer": "Yes, amiodarone roughly doubles digoxin levels, so your digoxin dose is usually cut in half and watched closely for toxicity signs like nausea.",
+      "human_fact_labels": [true, true, true]
+    },
+    {
+      "query_id": "q021",
+      "answer": "Yes, this combination is risky. Linezolid acts like an MAOI and combining it with sertraline raises the risk of serotonin syndrome, so it's generally avoided.",
+      "human_fact_labels": [true, true, true]
+    },
+    {
+      "query_id": "q024",
+      "answer": "Both drugs block the same folate pathway, so combining them can cause severe drops in blood counts. An alternative antibiotic is usually chosen.",
+      "human_fact_labels": [true, true, false]
+    },
+    {
+      "query_id": "q029",
+      "answer": "Tramadol has some serotonergic activity on top of being an opioid, so adding it to sertraline raises serotonin syndrome risk. It doesn't affect seizure risk though.",
+      "human_fact_labels": [true, true, false]
+    },
+    {
+      "query_id": "q030",
+      "answer": "This combination is not recommended. Gemfibrozil raises simvastatin levels substantially, increasing the risk of muscle damage.",
+      "human_fact_labels": [true, true, true]
+    },
+    {
+      "query_id": "q032",
+      "answer": "Yes, that's expected. Fluconazole blocks the enzyme that clears warfarin, so INR often rises quickly and the warfarin dose usually needs to be lowered.",
+      "human_fact_labels": [true, true, true]
+    },
+    {
+      "query_id": "n001",
+      "answer": "No significant interaction is known between amoxicillin and acetaminophen; they're commonly used together without special precautions.",
+      "human_fact_labels": [true]
+    },
+    {
+      "query_id": "n003",
+      "answer": "There's no significant interaction between metformin and loratadine, so this combination is generally fine.",
+      "human_fact_labels": [true]
+    },
+    {
+      "query_id": "n008",
+      "answer": "Omeprazole and acetaminophen don't have a clinically meaningful interaction and are routinely taken together.",
+      "human_fact_labels": [true]
     }
   ]
 }
