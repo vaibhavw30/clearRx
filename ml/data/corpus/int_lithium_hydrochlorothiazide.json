@@ -1,0 +1,20 @@
+{
+  "id": "int_lithium_hydrochlorothiazide",
+  "drug_a": "lithium",
+  "drug_b": "hydrochlorothiazide",
+  "drug_a_aliases": ["lithobid", "eskalith"],
+  "drug_b_aliases": ["microzide", "hctz"],
+  "drug_class_a": "mood stabilizer",
+  "drug_class_b": "thiazide diuretic",
+  "severity": "high",
+  "sections": {
+    "summary": "Thiazide diuretics such as hydrochlorothiazide reduce renal lithium clearance and can precipitate lithium toxicity, sometimes within days of starting the diuretic.",
+    "mechanism": "Hydrochlorothiazide causes mild volume depletion, which increases proximal tubular reabsorption of sodium and, because lithium is handled similarly to sodium, lithium is reabsorbed along with it. This reduces lithium clearance and raises serum concentrations.",
+    "clinical_effects": "Serum lithium levels can rise substantially, producing tremor, ataxia, confusion, and in severe cases seizures or arrhythmias consistent with lithium toxicity.",
+    "management": "If a thiazide must be added, reduce the lithium dose preemptively (often by 25-50%) and recheck levels before further titration; where possible, choose a non-thiazide antihypertensive instead.",
+    "monitoring": "Check serum lithium level within about 5-7 days of starting, stopping, or changing the dose of a thiazide, along with renal function, and educate the patient on symptoms of toxicity."
+  },
+  "evidence": [
+    {"citation": "Lithobid (lithium carbonate) FDA prescribing information, Drug Interactions section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2016/018421s032lbl.pdf"}
+  ]
+}

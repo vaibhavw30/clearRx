@@ -1,0 +1,20 @@
+{
+  "id": "int_sertraline_tramadol",
+  "drug_a": "sertraline",
+  "drug_b": "tramadol",
+  "drug_a_aliases": ["zoloft"],
+  "drug_b_aliases": ["ultram", "conzip"],
+  "drug_class_a": "ssri",
+  "drug_class_b": "opioid analgesic",
+  "severity": "high",
+  "sections": {
+    "summary": "Combining sertraline with tramadol increases the risk of serotonin syndrome, since tramadol itself has serotonergic activity in addition to its opioid effect.",
+    "mechanism": "Sertraline blocks serotonin reuptake, and tramadol both inhibits serotonin and norepinephrine reuptake and, through its metabolites, weakly stimulates serotonin release. The combined serotonergic effect can produce excess synaptic serotonin.",
+    "clinical_effects": "Signs of serotonin syndrome may appear, including agitation, tremor, hyperreflexia, diaphoresis, tachycardia, and in severe cases hyperthermia and altered mental status; tramadol also independently lowers the seizure threshold, which sertraline may add to.",
+    "management": "Use the combination cautiously and only when necessary, starting at lower tramadol doses; avoid combining with other serotonergic agents, and discontinue promptly if serotonergic symptoms appear.",
+    "monitoring": "Educate patients on early symptoms of serotonin syndrome (agitation, sweating, tremor) and monitor closely after initiation or dose increases of either drug."
+  },
+  "evidence": [
+    {"citation": "Ultram (tramadol) FDA prescribing information, Warnings and Precautions: Serotonin Syndrome", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2014/020281s036s037lbl.pdf"}
+  ]
+}

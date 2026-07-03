@@ -1,0 +1,20 @@
+{
+  "id": "int_rifampin_ethinylestradiol",
+  "drug_a": "rifampin",
+  "drug_b": "ethinylestradiol",
+  "drug_a_aliases": ["rifadin", "rimactane"],
+  "drug_b_aliases": ["ethinyl estradiol", "many combined oral contraceptives"],
+  "drug_class_a": "antibiotic (enzyme inducer)",
+  "drug_class_b": "oral contraceptive",
+  "severity": "moderate",
+  "sections": {
+    "summary": "Rifampin strongly induces the metabolism of ethinylestradiol, which can lower contraceptive hormone levels enough to cause breakthrough bleeding and contraceptive failure.",
+    "mechanism": "Rifampin is a potent inducer of CYP3A4 and other hepatic enzymes, accelerating the metabolism of ethinylestradiol and progestins, which lowers circulating hormone concentrations below levels needed to reliably suppress ovulation.",
+    "clinical_effects": "Reduced contraceptive efficacy manifests as breakthrough bleeding and, more importantly, an increased risk of unintended pregnancy during and shortly after rifampin therapy.",
+    "management": "Advise patients on rifampin to use an additional or alternative non-hormonal contraceptive method (e.g., barrier method) during treatment and for a period afterward, since enzyme induction can persist after the antibiotic is stopped.",
+    "monitoring": "No specific lab test detects this interaction; counsel patients directly and monitor for breakthrough bleeding as a signal of reduced hormonal effect."
+  },
+  "evidence": [
+    {"citation": "Rifadin (rifampin) FDA prescribing information, Drug Interactions section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2010/050420s073,050627s017lbl.pdf"}
+  ]
+}

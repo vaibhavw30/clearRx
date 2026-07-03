@@ -1,0 +1,20 @@
+{
+  "id": "int_theophylline_ciprofloxacin",
+  "drug_a": "theophylline",
+  "drug_b": "ciprofloxacin",
+  "drug_a_aliases": ["theo-24", "elixophyllin"],
+  "drug_b_aliases": ["cipro"],
+  "drug_class_a": "bronchodilator",
+  "drug_class_b": "fluoroquinolone",
+  "severity": "high",
+  "sections": {
+    "summary": "Ciprofloxacin inhibits theophylline clearance and can precipitate theophylline toxicity, which has a narrow therapeutic window and can be life-threatening.",
+    "mechanism": "Theophylline is metabolized largely by CYP1A2, and ciprofloxacin significantly inhibits this enzyme, reducing theophylline clearance and raising serum concentrations.",
+    "clinical_effects": "Theophylline levels can rise substantially, causing nausea, tremor, tachycardia, and at higher levels seizures or cardiac arrhythmias.",
+    "management": "If ciprofloxacin must be used with theophylline, reduce the theophylline dose preemptively and monitor levels; where possible, choose an antibiotic that does not significantly inhibit CYP1A2.",
+    "monitoring": "Check serum theophylline concentration before starting ciprofloxacin and again within a few days, watching for nausea, tremor, palpitations, or other early toxicity signs."
+  },
+  "evidence": [
+    {"citation": "Cipro (ciprofloxacin) FDA prescribing information, Drug Interactions section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2016/019537s086lbl.pdf"}
+  ]
+}

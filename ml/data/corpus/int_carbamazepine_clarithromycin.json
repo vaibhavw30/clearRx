@@ -1,0 +1,20 @@
+{
+  "id": "int_carbamazepine_clarithromycin",
+  "drug_a": "carbamazepine",
+  "drug_b": "clarithromycin",
+  "drug_a_aliases": ["tegretol", "carbatrol"],
+  "drug_b_aliases": ["biaxin"],
+  "drug_class_a": "anticonvulsant",
+  "drug_class_b": "macrolide",
+  "severity": "high",
+  "sections": {
+    "summary": "Clarithromycin strongly inhibits carbamazepine metabolism and can precipitate carbamazepine toxicity within just a few days of co-administration.",
+    "mechanism": "Carbamazepine is metabolized primarily by CYP3A4, and clarithromycin is a potent CYP3A4 inhibitor, sharply reducing carbamazepine clearance and allowing levels to accumulate rapidly.",
+    "clinical_effects": "Carbamazepine levels can rise significantly, producing ataxia, diplopia, dizziness, sedation, and in severe cases nystagmus or cardiac conduction abnormalities consistent with toxicity.",
+    "management": "Avoid clarithromycin in patients on carbamazepine when possible; azithromycin, which has minimal CYP3A4 inhibition, is a reasonable alternative macrolide. If clarithromycin is unavoidable, reduce the carbamazepine dose and monitor levels closely.",
+    "monitoring": "Check carbamazepine serum level before and within a few days of starting clarithromycin, and watch for early signs of toxicity such as ataxia, blurred or double vision, and drowsiness."
+  },
+  "evidence": [
+    {"citation": "Biaxin (clarithromycin) FDA prescribing information, Drug Interactions section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2015/050662s061lbl.pdf"}
+  ]
+}

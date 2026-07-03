@@ -1,0 +1,20 @@
+{
+  "id": "int_sertraline_ibuprofen",
+  "drug_a": "sertraline",
+  "drug_b": "ibuprofen",
+  "drug_a_aliases": ["zoloft"],
+  "drug_b_aliases": ["advil", "motrin", "nurofen"],
+  "drug_class_a": "ssri",
+  "drug_class_b": "nsaid",
+  "severity": "moderate",
+  "sections": {
+    "summary": "Combining sertraline with ibuprofen increases the risk of gastrointestinal bleeding beyond the risk of either drug alone.",
+    "mechanism": "SSRIs like sertraline deplete platelet serotonin, impairing platelet aggregation, while ibuprofen inhibits platelet cyclooxygenase and irritates the gastric mucosa. The combined effect on hemostasis and mucosal integrity is additive.",
+    "clinical_effects": "Observational studies show a higher incidence of upper gastrointestinal bleeding when SSRIs are combined with NSAIDs compared to either drug used alone.",
+    "management": "Use the combination cautiously; prefer acetaminophen for analgesia when possible, and if an NSAID is necessary, use the lowest effective dose for the shortest duration with consideration of gastroprotection such as a proton pump inhibitor.",
+    "monitoring": "Watch for signs of gastrointestinal bleeding, including dark stools, hematemesis, or unexplained anemia, especially with prolonged or high-dose NSAID use."
+  },
+  "evidence": [
+    {"citation": "Loke YK, et al. Aliment Pharmacol Ther. 2008;27(1):31-40", "url": "https://pubmed.ncbi.nlm.nih.gov/17939934/"}
+  ]
+}

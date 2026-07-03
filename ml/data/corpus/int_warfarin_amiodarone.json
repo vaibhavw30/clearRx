@@ -1,0 +1,20 @@
+{
+  "id": "int_warfarin_amiodarone",
+  "drug_a": "warfarin",
+  "drug_b": "amiodarone",
+  "drug_a_aliases": ["coumadin", "jantoven"],
+  "drug_b_aliases": ["cordarone", "pacerone"],
+  "drug_class_a": "anticoagulant",
+  "drug_class_b": "antiarrhythmic",
+  "severity": "high",
+  "sections": {
+    "summary": "Amiodarone markedly potentiates warfarin, raising the INR and bleeding risk. The interaction develops gradually over days to weeks and can persist for weeks after amiodarone is discontinued because of its very long half-life.",
+    "mechanism": "Amiodarone and its active metabolite desethylamiodarone inhibit CYP2C9, which clears warfarin's more potent S-enantiomer, and also inhibit CYP3A4, which contributes to R-warfarin clearance. The net effect is reduced warfarin metabolism and drug accumulation.",
+    "clinical_effects": "INR typically rises over one to several weeks, often requiring a substantial warfarin dose reduction, with increased risk of bruising, epistaxis, and major bleeding if unadjusted.",
+    "management": "Anticipate a warfarin dose reduction of roughly 30-50% when starting amiodarone, guided by INR trends rather than a single value. Continue to monitor closely after amiodarone is stopped since its effect on CYP enzymes lingers.",
+    "monitoring": "Check INR weekly for the first several weeks after starting or stopping amiodarone, then resume routine monitoring once stable, and counsel the patient on bleeding warning signs."
+  },
+  "evidence": [
+    {"citation": "Sanoski CA, Bauman JL. Chest. 2002;121(1):19-23", "url": "https://pubmed.ncbi.nlm.nih.gov/11796427/"}
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "int_digoxin_amiodarone",
+  "drug_a": "digoxin",
+  "drug_b": "amiodarone",
+  "drug_a_aliases": ["lanoxin"],
+  "drug_b_aliases": ["cordarone", "pacerone"],
+  "drug_class_a": "cardiac glycoside",
+  "drug_class_b": "antiarrhythmic",
+  "severity": "high",
+  "sections": {
+    "summary": "Starting amiodarone in a patient on digoxin roughly doubles digoxin serum concentrations, creating a substantial risk of digoxin toxicity unless the dose is preemptively reduced.",
+    "mechanism": "Amiodarone inhibits P-glycoprotein-mediated renal and biliary clearance of digoxin, and it also reduces digoxin's volume of distribution, both of which raise serum digoxin levels. Amiodarone's long half-life means this effect can take weeks to fully develop.",
+    "clinical_effects": "Digoxin levels commonly increase by 70-100%, producing anorexia, nausea, visual disturbances, and cardiac arrhythmias including heart block if the toxicity goes unrecognized.",
+    "management": "Reduce the digoxin dose by approximately half when amiodarone is started, and recheck levels before making further adjustments; consider empirically lowering the dose again if amiodarone therapy continues long term.",
+    "monitoring": "Obtain a baseline digoxin level before starting amiodarone and recheck at 1-2 weeks and again at steady state, watching for anorexia, nausea, or visual symptoms suggestive of toxicity."
+  },
+  "evidence": [
+    {"citation": "Nademanee K, et al. Am Heart J. 1984;108(4):895-899", "url": "https://pubmed.ncbi.nlm.nih.gov/6486087/"}
+  ]
+}

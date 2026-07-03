@@ -1,0 +1,20 @@
+{
+  "id": "int_methotrexate_trimethoprim",
+  "drug_a": "methotrexate",
+  "drug_b": "trimethoprim",
+  "drug_a_aliases": ["trexall", "rheumatrex", "otrexup"],
+  "drug_b_aliases": ["bactrim", "septra", "co-trimoxazole"],
+  "drug_class_a": "antimetabolite",
+  "drug_class_b": "antibiotic",
+  "severity": "high",
+  "sections": {
+    "summary": "Trimethoprim, most often given as trimethoprim-sulfamethoxazole, can precipitate severe, sometimes fatal bone marrow suppression when combined with methotrexate.",
+    "mechanism": "Both drugs inhibit dihydrofolate reductase, so their antifolate effects are additive rather than merely overlapping. Trimethoprim-sulfamethoxazole also reduces renal tubular secretion of methotrexate and displaces it from plasma proteins, raising free methotrexate concentrations.",
+    "clinical_effects": "Pancytopenia, severe mucositis, and megaloblastic anemia can develop, occasionally within days, particularly in patients on higher-dose or even low-dose weekly methotrexate regimens.",
+    "management": "Avoid trimethoprim-sulfamethoxazole in patients taking methotrexate whenever possible; select an alternative antibiotic. If no alternative exists, use it only briefly with close hematologic monitoring and consider folinic acid rescue.",
+    "monitoring": "Obtain a complete blood count before and shortly after starting the combination, and watch closely for mouth sores, fever, or unusual bruising that could signal marrow suppression."
+  },
+  "evidence": [
+    {"citation": "Bactrim (sulfamethoxazole/trimethoprim) FDA prescribing information, Drug Interactions section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2013/017377s064lbl.pdf"}
+  ]
+}

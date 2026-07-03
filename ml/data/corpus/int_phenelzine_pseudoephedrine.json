@@ -1,0 +1,20 @@
+{
+  "id": "int_phenelzine_pseudoephedrine",
+  "drug_a": "phenelzine",
+  "drug_b": "pseudoephedrine",
+  "drug_a_aliases": ["nardil"],
+  "drug_b_aliases": ["sudafed"],
+  "drug_class_a": "maoi",
+  "drug_class_b": "sympathomimetic",
+  "severity": "high",
+  "sections": {
+    "summary": "Pseudoephedrine combined with the MAOI phenelzine can trigger a hypertensive crisis and is considered contraindicated.",
+    "mechanism": "Phenelzine inhibits monoamine oxidase, preventing breakdown of norepinephrine, while pseudoephedrine promotes norepinephrine release from nerve terminals. The result is an exaggerated, unchecked surge in circulating norepinephrine.",
+    "clinical_effects": "Severe, abrupt hypertension can occur, accompanied by headache, palpitations, and risk of intracranial hemorrhage or stroke in serious cases.",
+    "management": "Avoid pseudoephedrine and other sympathomimetic decongestants entirely in patients taking phenelzine or other MAOIs; recommend non-sympathomimetic alternatives for nasal congestion, such as saline irrigation or intranasal corticosteroids.",
+    "monitoring": "Not applicable given the combination should be avoided; if accidental exposure occurs, monitor blood pressure urgently and treat hypertensive crisis per standard protocols."
+  },
+  "evidence": [
+    {"citation": "Nardil (phenelzine) FDA prescribing information, Contraindications and Warnings section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2007/012185s061lbl.pdf"}
+  ]
+}

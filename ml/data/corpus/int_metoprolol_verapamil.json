@@ -1,0 +1,20 @@
+{
+  "id": "int_metoprolol_verapamil",
+  "drug_a": "metoprolol",
+  "drug_b": "verapamil",
+  "drug_a_aliases": ["lopressor", "toprol-xl"],
+  "drug_b_aliases": ["calan", "verelan", "isoptin"],
+  "drug_class_a": "beta blocker",
+  "drug_class_b": "calcium channel blocker",
+  "severity": "high",
+  "sections": {
+    "summary": "Combining metoprolol with verapamil produces additive suppression of AV nodal conduction and cardiac contractility, risking severe bradycardia, heart block, or hypotension.",
+    "mechanism": "Metoprolol slows AV nodal conduction and reduces contractility through beta-1 blockade, while verapamil independently slows AV conduction and depresses contractility through calcium channel blockade. Verapamil also modestly inhibits metoprolol's CYP2D6-mediated metabolism, raising beta-blocker levels further.",
+    "clinical_effects": "Patients can develop marked bradycardia, high-grade AV block, hypotension, or worsening heart failure, particularly in those with underlying conduction disease or reduced left ventricular function.",
+    "management": "Use the combination cautiously and generally avoid it in patients with conduction abnormalities or significant left ventricular dysfunction; if both are needed, start at low doses and titrate slowly with close monitoring.",
+    "monitoring": "Obtain baseline and follow-up ECGs to assess heart rate and PR interval, and monitor blood pressure and symptoms of heart failure after initiation or dose changes."
+  },
+  "evidence": [
+    {"citation": "Calan (verapamil) FDA prescribing information, Drug Interactions section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2010/018871s047lbl.pdf"}
+  ]
+}

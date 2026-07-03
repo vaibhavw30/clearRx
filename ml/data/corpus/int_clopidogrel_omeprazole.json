@@ -1,0 +1,20 @@
+{
+  "id": "int_clopidogrel_omeprazole",
+  "drug_a": "clopidogrel",
+  "drug_b": "omeprazole",
+  "drug_a_aliases": ["plavix"],
+  "drug_b_aliases": ["prilosec"],
+  "drug_class_a": "antiplatelet",
+  "drug_class_b": "proton pump inhibitor",
+  "severity": "moderate",
+  "sections": {
+    "summary": "Omeprazole can blunt clopidogrel's antiplatelet effect by reducing formation of its active metabolite, potentially lowering cardiovascular protection in patients relying on clopidogrel after stenting or acute coronary syndrome.",
+    "mechanism": "Clopidogrel is a prodrug that requires CYP2C19 for conversion to its active thiol metabolite. Omeprazole is a comparatively potent CYP2C19 inhibitor, reducing generation of the active metabolite and blunting platelet inhibition.",
+    "clinical_effects": "Platelet reactivity studies show reduced clopidogrel effect with omeprazole co-administration, and some observational and pharmacodynamic data suggest a possible increase in cardiovascular events, though clinical outcome data are mixed.",
+    "management": "When acid suppression is needed with clopidogrel, prefer a PPI with less CYP2C19 inhibition, such as pantoprazole, or an H2-receptor antagonist if appropriate; avoid omeprazole and esomeprazole when feasible.",
+    "monitoring": "No routine lab monitoring is required, but clinicians should reassess the need for concomitant acid suppression and remain alert to signs of stent thrombosis or recurrent ischemia."
+  },
+  "evidence": [
+    {"citation": "Plavix (clopidogrel) FDA prescribing information, Drug Interactions section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2011/020839s055lbl.pdf"}
+  ]
+}

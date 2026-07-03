@@ -1,0 +1,20 @@
+{
+  "id": "int_allopurinol_azathioprine",
+  "drug_a": "allopurinol",
+  "drug_b": "azathioprine",
+  "drug_a_aliases": ["zyloprim"],
+  "drug_b_aliases": ["imuran", "azasan"],
+  "drug_class_a": "xanthine oxidase inhibitor",
+  "drug_class_b": "immunosuppressant",
+  "severity": "high",
+  "sections": {
+    "summary": "Allopurinol blocks a major metabolic pathway for azathioprine, and unadjusted co-administration can cause severe, potentially life-threatening bone marrow suppression.",
+    "mechanism": "Azathioprine's active metabolite 6-mercaptopurine is normally inactivated by xanthine oxidase. Allopurinol inhibits xanthine oxidase, causing 6-mercaptopurine and its toxic metabolites to accumulate well beyond intended levels.",
+    "clinical_effects": "Without dose adjustment, patients can develop profound leukopenia, thrombocytopenia, and anemia, along with increased susceptibility to serious infection.",
+    "management": "If the combination is necessary, reduce the azathioprine dose to about 25-33% of the original dose when allopurinol is started, and adjust further based on blood counts and clinical response.",
+    "monitoring": "Obtain a complete blood count before starting allopurinol and monitor frequently (e.g., weekly) for several weeks after any dose change, watching for signs of infection or bleeding."
+  },
+  "evidence": [
+    {"citation": "Imuran (azathioprine) FDA prescribing information, Drug Interactions section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2011/016324s034,017391s016lbl.pdf"}
+  ]
+}

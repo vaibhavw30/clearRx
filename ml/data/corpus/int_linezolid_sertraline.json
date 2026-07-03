@@ -1,0 +1,20 @@
+{
+  "id": "int_linezolid_sertraline",
+  "drug_a": "linezolid",
+  "drug_b": "sertraline",
+  "drug_a_aliases": ["zyvox"],
+  "drug_b_aliases": ["zoloft"],
+  "drug_class_a": "antibiotic (maoi)",
+  "drug_class_b": "ssri",
+  "severity": "high",
+  "sections": {
+    "summary": "Linezolid is a reversible, nonselective monoamine oxidase inhibitor, and combining it with sertraline carries a serious, well-documented risk of serotonin syndrome; the combination is generally contraindicated.",
+    "mechanism": "Linezolid inhibits monoamine oxidase, slowing breakdown of serotonin, while sertraline blocks serotonin reuptake. Together they cause excess accumulation of serotonin in the central nervous system.",
+    "clinical_effects": "Reported cases include agitation, confusion, tremor, hyperreflexia, autonomic instability, and hyperthermia consistent with serotonin syndrome, sometimes with rapid onset after starting linezolid.",
+    "management": "Avoid linezolid in patients taking sertraline whenever possible; if antibiotic therapy is essential and no alternative exists, sertraline should be discontinued in advance per labeling guidance and the patient monitored closely.",
+    "monitoring": "If concurrent use cannot be avoided, monitor closely for signs of serotonin syndrome for the duration of linezolid therapy and for a period afterward given sertraline's lingering serotonergic activity."
+  },
+  "evidence": [
+    {"citation": "Zyvox (linezolid) FDA prescribing information, Warnings and Precautions: Serotonin Syndrome", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2015/021130s032,021131s033,021132s040lbl.pdf"}
+  ]
+}

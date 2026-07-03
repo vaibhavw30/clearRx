@@ -1,0 +1,20 @@
+{
+  "id": "int_digoxin_verapamil",
+  "drug_a": "digoxin",
+  "drug_b": "verapamil",
+  "drug_a_aliases": ["lanoxin"],
+  "drug_b_aliases": ["calan", "verelan", "isoptin"],
+  "drug_class_a": "cardiac glycoside",
+  "drug_class_b": "calcium channel blocker",
+  "severity": "high",
+  "sections": {
+    "summary": "Verapamil raises digoxin plasma concentrations and adds its own AV-nodal blocking effect, increasing the risk of digoxin toxicity and symptomatic bradycardia.",
+    "mechanism": "Verapamil inhibits P-glycoprotein, which normally limits digoxin absorption and promotes its renal and biliary excretion, so digoxin levels rise. Verapamil also independently slows AV nodal conduction, compounding digoxin's own effect on the AV node.",
+    "clinical_effects": "Digoxin levels can increase by roughly 50-70%, and the combination can produce bradycardia, high-grade AV block, and signs of digoxin toxicity such as nausea, visual disturbances, and arrhythmias.",
+    "management": "When starting verapamil in a patient on digoxin, reduce the digoxin dose (often by about half) and retitrate based on levels and clinical response; avoid the combination in patients with pre-existing conduction disease.",
+    "monitoring": "Check serum digoxin concentration and an ECG for PR interval and heart rate within the first one to two weeks of starting or adjusting verapamil, and watch for symptoms of toxicity."
+  },
+  "evidence": [
+    {"citation": "Lanoxin (digoxin) FDA prescribing information, Drug Interactions section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2011/020405s017lbl.pdf"}
+  ]
+}

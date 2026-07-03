@@ -1,0 +1,20 @@
+{
+  "id": "int_lithium_ibuprofen",
+  "drug_a": "lithium",
+  "drug_b": "ibuprofen",
+  "drug_a_aliases": ["lithobid", "eskalith"],
+  "drug_b_aliases": ["advil", "motrin", "nurofen"],
+  "drug_class_a": "mood stabilizer",
+  "drug_class_b": "nsaid",
+  "severity": "moderate",
+  "sections": {
+    "summary": "Regular NSAID use, including ibuprofen, can raise serum lithium levels and precipitate toxicity, particularly with sustained dosing rather than a single occasional dose.",
+    "mechanism": "Ibuprofen inhibits renal prostaglandin synthesis, which reduces renal blood flow and glomerular filtration. Because lithium is eliminated almost entirely by the kidney, this reduced filtration decreases lithium clearance and raises serum concentrations.",
+    "clinical_effects": "Lithium levels can rise into the toxic range over days of regular ibuprofen use, producing tremor, gastrointestinal upset, lethargy, and in more severe cases confusion or renal impairment.",
+    "management": "Avoid regular or high-dose NSAID use in patients on lithium; recommend acetaminophen for analgesia when appropriate, and if an NSAID course is necessary, use the lowest dose for the shortest duration with level monitoring.",
+    "monitoring": "Check serum lithium level if NSAID use extends beyond a few days, and monitor renal function periodically with chronic co-administration."
+  },
+  "evidence": [
+    {"citation": "Ragheb M. J Clin Psychiatry. 1990;51(9):356-361", "url": "https://pubmed.ncbi.nlm.nih.gov/2211539/"}
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "int_ciprofloxacin_tizanidine",
+  "drug_a": "ciprofloxacin",
+  "drug_b": "tizanidine",
+  "drug_a_aliases": ["cipro"],
+  "drug_b_aliases": ["zanaflex"],
+  "drug_class_a": "fluoroquinolone",
+  "drug_class_b": "muscle relaxant",
+  "severity": "high",
+  "sections": {
+    "summary": "Ciprofloxacin dramatically raises tizanidine plasma levels, causing profound hypotension and sedation; this combination is contraindicated.",
+    "mechanism": "Tizanidine is primarily cleared by CYP1A2, and ciprofloxacin is a potent CYP1A2 inhibitor. Blocking this pathway causes tizanidine concentrations to rise many-fold above normal.",
+    "clinical_effects": "Studies show tizanidine exposure increasing roughly sevenfold with ciprofloxacin, producing marked hypotension, bradycardia, drowsiness, and impaired psychomotor performance.",
+    "management": "Do not co-administer ciprofloxacin and tizanidine. If an antibiotic is needed, select one without significant CYP1A2 inhibition; if tizanidine is essential, choose a non-fluoroquinolone alternative.",
+    "monitoring": "Not applicable for concurrent use since the combination should be avoided outright; if inadvertent co-administration occurs, monitor blood pressure and mental status closely and hold tizanidine."
+  },
+  "evidence": [
+    {"citation": "Zanaflex (tizanidine) FDA prescribing information, Contraindications section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2013/021447s013lbl.pdf"}
+  ]
+}

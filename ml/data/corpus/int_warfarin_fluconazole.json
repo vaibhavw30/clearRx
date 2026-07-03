@@ -1,0 +1,20 @@
+{
+  "id": "int_warfarin_fluconazole",
+  "drug_a": "warfarin",
+  "drug_b": "fluconazole",
+  "drug_a_aliases": ["coumadin", "jantoven"],
+  "drug_b_aliases": ["diflucan"],
+  "drug_class_a": "anticoagulant",
+  "drug_class_b": "antifungal",
+  "severity": "high",
+  "sections": {
+    "summary": "Fluconazole causes a rapid and pronounced rise in INR when added to warfarin, even at low antifungal doses, and can precipitate serious bleeding within days.",
+    "mechanism": "Fluconazole is a potent inhibitor of CYP2C9, the primary enzyme responsible for clearing the more active S-warfarin enantiomer, and also inhibits CYP3A4. This sharply reduces warfarin clearance and raises plasma concentrations.",
+    "clinical_effects": "INR can rise substantially within just a few days of starting fluconazole, with increased risk of bruising, mucosal bleeding, and major hemorrhage if the dose is not adjusted promptly.",
+    "management": "If fluconazole cannot be avoided, preemptively reduce the warfarin dose (often by 25-50%) and monitor INR closely; an alternative antifungal with less CYP2C9 inhibition may be preferable when appropriate.",
+    "monitoring": "Check INR within 3-5 days of starting fluconazole and again after it is stopped, continuing frequent checks until the INR is stable at the adjusted dose."
+  },
+  "evidence": [
+    {"citation": "Diflucan (fluconazole) FDA prescribing information, Drug Interactions section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2011/019949s054lbl.pdf"}
+  ]
+}
