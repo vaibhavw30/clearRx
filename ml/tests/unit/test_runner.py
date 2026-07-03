@@ -80,6 +80,32 @@ def test_duplicate_doc_chunks_do_not_inflate_ranking_metrics():
     assert agg["mrr"] == 1.0
 
 
+def _negative_query():
+    return EvalQuery(
+        id="n001", query="amoxicillin acetaminophen", query_type="no_interaction",
+        expected_doc_ids=[], expected_retrieval_topics=[],
+        expected_answer_facts=["No clinically significant interaction"],
+        must_not_say=["dangerous interaction"], severity="low",
+    )
+
+
+def test_negative_query_does_not_drag_ranking_metrics():
+    # Pipeline always returns the warfarin doc; for the positive query that is
+    # relevant (recall 1.0). The negative query has no gold doc and must be
+    # excluded from ranking aggregates rather than counted as a 0.0.
+    runner = EvalRunner(MultiChunkSameDocPipeline(), FakeJudge(), k=5, clock=lambda: 0.0)
+    report = runner.run([_query(), _negative_query()])
+    agg = report.aggregate
+    assert agg["n_queries"] == 2.0
+    assert agg["n_retrieval_gradable"] == 1.0
+    assert agg["recall_at_k"] == 1.0   # averaged over the 1 gradable query, not 0.5
+    assert agg["mrr"] == 1.0
+    # per-query rows expose gradability
+    rows = {r["id"]: r for r in report.per_query}
+    assert rows["q001"]["retrieval_gradable"] is True
+    assert rows["n001"]["retrieval_gradable"] is False
+
+
 def test_write_report_creates_files(tmp_path):
     runner = EvalRunner(FakePipeline(), FakeJudge(), k=5, clock=lambda: 0.0)
     report = runner.run([_query()])

@@ -20,6 +20,11 @@ def _mean(xs: list[float]) -> float:
     return sum(xs) / len(xs) if xs else 0.0
 
 
+def _mean_where(rows: list[dict], key: str, gate: str) -> float:
+    vals = [r[key] for r in rows if r[gate]]
+    return sum(vals) / len(vals) if vals else 0.0
+
+
 def _distinct_doc_ids(chunks) -> list[str]:
     """Collapse retrieved chunks to distinct source docs in first-seen order.
     Relevance is judged at the document level, so doc-level ranking metrics
@@ -95,18 +100,22 @@ class EvalRunner:
                     "forbidden_violations": sum(1 for v in forbidden if v),
                     "latency_ms": latency_ms,
                     "answer": answer,
+                    "retrieval_gradable": bool(relevant),
+                    "coverage_gradable": bool(q.expected_retrieval_topics),
                 }
             )
 
         aggregate = {
-            "retrieval_coverage": _mean([r["retrieval_coverage"] for r in rows]),
-            "precision_at_k": _mean([r["precision_at_k"] for r in rows]),
-            "recall_at_k": _mean([r["recall_at_k"] for r in rows]),
-            "mrr": _mean([r["mrr"] for r in rows]),
-            "ndcg": _mean([r["ndcg"] for r in rows]),
+            "retrieval_coverage": _mean_where(rows, "retrieval_coverage", "coverage_gradable"),
+            "precision_at_k": _mean_where(rows, "precision_at_k", "retrieval_gradable"),
+            "recall_at_k": _mean_where(rows, "recall_at_k", "retrieval_gradable"),
+            "mrr": _mean_where(rows, "mrr", "retrieval_gradable"),
+            "ndcg": _mean_where(rows, "ndcg", "retrieval_gradable"),
             "fact_coverage": _mean([r["fact_coverage"] for r in rows]),
             "forbidden_violations": float(sum(r["forbidden_violations"] for r in rows)),
             "latency_ms_p50": percentile(latencies, 50),
             "latency_ms_p95": percentile(latencies, 95),
+            "n_queries": float(len(rows)),
+            "n_retrieval_gradable": float(sum(1 for r in rows if r["retrieval_gradable"])),
         }
         return EvalReport(aggregate=aggregate, per_query=rows)
