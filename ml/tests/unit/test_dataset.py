@@ -38,3 +38,21 @@ def test_rejects_duplicate_ids(tmp_path):
     p.write_text(json.dumps({"queries": [_q("dup"), _q("dup")]}))
     with pytest.raises(DatasetError):
         load_queries(str(p))
+
+
+def test_no_interaction_query_type_is_accepted(tmp_path):
+    from app.eval.dataset import load_queries
+    p = tmp_path / "q.json"
+    p.write_text(json.dumps({"queries": [{
+        "id": "n001",
+        "query": "Can I take amoxicillin with acetaminophen?",
+        "query_type": "no_interaction",
+        "expected_doc_ids": [],
+        "expected_retrieval_topics": [],
+        "expected_answer_facts": ["No clinically significant interaction"],
+        "must_not_say": ["dangerous interaction", "avoid this combination"],
+        "severity": "low",
+    }]}))
+    queries = load_queries(str(p))
+    assert queries[0].query_type == "no_interaction"
+    assert queries[0].expected_doc_ids == []

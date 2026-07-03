@@ -4,7 +4,7 @@ import json
 
 from pydantic import BaseModel, Field, ValidationError, field_validator
 
-_TYPES = {"interaction", "dosage", "contraindication"}
+_TYPES = {"interaction", "dosage", "contraindication", "no_interaction"}
 
 
 class DatasetError(Exception):
