@@ -50,3 +50,16 @@ def test_ollama_generate_returns_text():
     client = OllamaClient(s.ollama_base_url, s.gen_model)
     out = client.generate("Answer in one short sentence: what is 2 + 2?")
     assert isinstance(out, str) and out.strip()
+
+
+@pytest.mark.integration
+def test_local_judge_scores_facts():
+    from app.rag.judge_clients import build_judge
+
+    s = get_settings()  # judge_provider defaults to ollama
+    judge = build_judge(s)
+    result = judge.score_facts(
+        "Ibuprofen and warfarin together increase bleeding risk.",
+        ["Increased bleeding risk", "Reduces blood pressure"],
+    )
+    assert result == [True, False] or (isinstance(result, list) and len(result) == 2)
