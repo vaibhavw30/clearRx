@@ -40,3 +40,13 @@ def test_pinecone_upsert_query_roundtrip():
     q = emb.embed_query("can I combine warfarin and ibuprofen")
     matches = store.query(q.tolist(), top_k=1, flt=None, namespace="itest")
     assert matches and matches[0].metadata["source_doc_id"] == "itest"
+
+
+@pytest.mark.integration
+def test_ollama_generate_returns_text():
+    from app.rag.generator import OllamaClient
+
+    s = get_settings()
+    client = OllamaClient(s.ollama_base_url, s.gen_model)
+    out = client.generate("Answer in one short sentence: what is 2 + 2?")
+    assert isinstance(out, str) and out.strip()
