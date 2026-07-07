@@ -47,7 +47,8 @@ def main() -> None:
     print("\n=== dense metrics ===")
     print(report.to_markdown())
     if os.path.exists(baseline_path):
-        baseline = json.load(open(baseline_path))["aggregate"]
+        with open(baseline_path, encoding="utf-8") as fh:
+            baseline = json.load(fh)["aggregate"]
         print("=== keyword -> dense ===")
         for r in compare(baseline, report.aggregate):
             print(f"{r['metric']:>20}: {r['baseline']:.4f} -> {r['dense']:.4f}  "

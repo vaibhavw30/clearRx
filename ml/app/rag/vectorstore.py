@@ -81,5 +81,5 @@ class PineconeStore:
             md = m["metadata"] if isinstance(m, dict) else m.metadata
             mid = m["id"] if isinstance(m, dict) else m.id
             score = m["score"] if isinstance(m, dict) else m.score
-            out.append(Match(id=mid, score=float(score), metadata=dict(md)))
+            out.append(Match(id=mid, score=float(score), metadata=dict(md or {})))
         return out
