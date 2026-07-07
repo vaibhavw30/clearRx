@@ -20,3 +20,22 @@ def test_env_override(monkeypatch):
 
 def test_get_settings_is_cached():
     assert get_settings() is get_settings()
+
+
+def test_phase1b_settings_defaults(monkeypatch):
+    from app.config import Settings
+    for var in ["PINECONE_API_KEY", "OPENAI_API_KEY", "OLLAMA_BASE_URL"]:
+        monkeypatch.delenv(var, raising=False)
+    s = Settings()
+    assert s.embedding_dim == 1024
+    assert s.pinecone_metric == "dotproduct"
+    assert s.pinecone_cloud == "aws"
+    assert s.ollama_base_url == "http://localhost:11434"
+    assert s.pinecone_api_key == ""      # safe default, no env needed for unit tests
+    assert s.judge_provider == "ollama"
+
+
+def test_pinecone_key_read_from_env(monkeypatch):
+    from app.config import Settings
+    monkeypatch.setenv("PINECONE_API_KEY", "pc-xyz")
+    assert Settings().pinecone_api_key == "pc-xyz"

@@ -25,6 +25,14 @@ class Settings(BaseSettings):
     judge_provider: str = "ollama"
     judge_model: str = "llama3.1"
 
+    pinecone_api_key: str = ""
+    pinecone_metric: str = "dotproduct"
+    pinecone_cloud: str = "aws"
+    pinecone_region: str = "us-east-1"
+
+    ollama_base_url: str = "http://localhost:11434"
+    openai_api_key: str = ""
+
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
