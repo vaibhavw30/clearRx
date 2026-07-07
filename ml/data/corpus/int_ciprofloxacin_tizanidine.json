@@ -15,6 +15,6 @@
     "monitoring": "Not applicable for concurrent use since the combination should be avoided outright; if inadvertent co-administration occurs, monitor blood pressure and mental status closely and hold tizanidine."
   },
   "evidence": [
-    {"citation": "Zanaflex (tizanidine) FDA prescribing information, Contraindications section", "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2013/021447s013lbl.pdf"}
+    {"citation": "Zanaflex (tizanidine) FDA prescribing information, Contraindications section", "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=tizanidine"}
   ]
 }

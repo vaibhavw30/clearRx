@@ -15,6 +15,6 @@
     "monitoring": "Watch for signs of gastrointestinal bleeding, including dark stools, hematemesis, or unexplained anemia, especially with prolonged or high-dose NSAID use."
   },
   "evidence": [
-    {"citation": "Loke YK, et al. Aliment Pharmacol Ther. 2008;27(1):31-40", "url": "https://pubmed.ncbi.nlm.nih.gov/17939934/"}
+    {"citation": "Loke YK, et al. Aliment Pharmacol Ther. 2008;27(1):31-40", "url": "https://doi.org/10.1111/j.1365-2036.2007.03541.x"}
   ]
 }
