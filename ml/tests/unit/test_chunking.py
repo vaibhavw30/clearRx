@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import numpy as np
 
-from app.rag.chunking import FixedSizeChunker, RecursiveChunker, SemanticChunker, chunk_metadata
+from app.config import Settings
+from app.rag.chunking import FixedSizeChunker, RecursiveChunker, SemanticChunker, chunk_metadata, build_chunkers
 from app.rag.models import Monograph
 
 
@@ -129,3 +130,8 @@ def test_semantic_chunker_single_sentence_is_one_chunk():
     chunks = SemanticChunker(ClusterEmbedder()).chunk(doc)
     assert len(chunks) == 1
     assert chunks[0].text == "Only one sentence"
+
+
+def test_build_chunkers_returns_three_named_strategies():
+    chunkers = build_chunkers(Settings(), ClusterEmbedder())
+    assert [c.name for c in chunkers] == ["fixed", "recursive", "semantic"]

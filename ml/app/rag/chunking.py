@@ -150,3 +150,11 @@ class SemanticChunker:
             for i, t in enumerate(texts)
             if t
         ]
+
+
+def build_chunkers(settings, embedder) -> list:
+    return [
+        FixedSizeChunker(chunk_size=512, overlap=0),
+        RecursiveChunker(settings.chunk_recursive_size, settings.chunk_recursive_overlap),
+        SemanticChunker(embedder, settings.semantic_threshold_percentile),
+    ]
