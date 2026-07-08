@@ -1150,6 +1150,8 @@ python -m scripts.run_retrieval_experiment
 
 **Adopting the winner (manual follow-up):** once `retrieval.md` names the winning config, wire it into the answer path by replacing the `DenseRagPipeline` construction in `scripts/run_dense.py` with a `HybridRerankRetriever` at the winning alpha (and `build_reranker(settings)` if rerank won), pointed at the `hybrid` namespace, and load BM25 params from `settings.bm25_params_path`. Record the precision@5 lift in the README debrief (Phase 5).
 
+> **Note — BM25 `load` is only unit-covered so far.** The experiment `main()` reuses the in-memory `BM25SparseEncoder` it just `fit`, so `BM25SparseEncoder.load` is never exercised outside `test_sparse.py`'s delegation test. The winner-adoption step above is the first real query-time `load`, so validate a genuine dump→load→`encode_query` round-trip against real pinecone-text params (the on-disk format is pinecone-text's, not the test fake's `{indices,values}`) before relying on it.
+
 **If the result is flat** (hybrid/rerank within noise of dense): document it honestly rather than manufacturing a winner (design spec §11 / §8).
 
 ---
