@@ -9,14 +9,19 @@ from app.rag.vectorstore import PineconeStore, Record
 
 
 def build_records(
-    docs: list[Monograph], chunker: Chunker, embedder: Embedder
+    docs: list[Monograph], chunker: Chunker, embedder: Embedder, sparse_encoder=None
 ) -> list[Record]:
     chunks = [c for doc in docs for c in chunker.chunk(doc)]
     if not chunks:
         return []
-    vectors = embedder.embed([c.text for c in chunks])
+    texts = [c.text for c in chunks]
+    vectors = embedder.embed(texts)
+    sparses = None
+    if sparse_encoder is not None:
+        sparse_encoder.fit(texts)
+        sparses = sparse_encoder.encode_documents(texts)
     records: list[Record] = []
-    for c, vec in zip(chunks, vectors):
+    for i, (c, vec) in enumerate(zip(chunks, vectors)):
         metadata = dict(c.metadata)
         metadata.update(
             {
@@ -30,6 +35,7 @@ def build_records(
             Record(
                 id=f"{c.source_doc_id}::{c.section}::{c.chunk_index}",
                 values=[float(x) for x in vec],
+                sparse_values=(sparses[i] if sparses is not None else None),
                 metadata=metadata,
             )
         )

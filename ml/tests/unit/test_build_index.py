@@ -37,3 +37,29 @@ def test_build_records_ids_and_metadata():
     assert summary.metadata["severity"] == "high"
     assert "a" in summary.metadata["drugs_mentioned"]
     assert len(summary.values) == 3  # embedding attached
+
+
+class _FakeSparseEnc:
+    def __init__(self):
+        self.fitted = None
+
+    def fit(self, texts):
+        self.fitted = list(texts)
+
+    def encode_documents(self, texts):
+        return [{"indices": [1], "values": [0.5]} for _ in texts]
+
+
+def test_build_records_attaches_sparse_when_encoder_given():
+    enc = _FakeSparseEnc()
+    recs = build_records(
+        [_doc()], FixedSizeChunker(chunk_size=512, overlap=0), FakeEmbedder(),
+        sparse_encoder=enc,
+    )
+    assert enc.fitted is not None
+    assert recs and all(r.sparse_values == {"indices": [1], "values": [0.5]} for r in recs)
+
+
+def test_build_records_sparse_none_by_default():
+    recs = build_records([_doc()], FixedSizeChunker(chunk_size=512, overlap=0), FakeEmbedder())
+    assert recs and all(r.sparse_values is None for r in recs)
