@@ -47,3 +47,15 @@ def test_phase2_chunking_settings_defaults():
     assert s.chunk_recursive_size == 300
     assert s.chunk_recursive_overlap == 60
     assert s.semantic_threshold_percentile == 85.0
+
+
+def test_phase3_hybrid_rerank_settings_defaults():
+    from app.config import Settings
+    s = Settings()
+    assert s.rerank_provider == "local"
+    assert s.rerank_model_local == "BAAI/bge-reranker-base"
+    assert s.cohere_rerank_model == "rerank-english-v3.0"
+    assert s.hybrid_alphas == [0.0, 0.25, 0.5, 0.75, 1.0]
+    assert s.hybrid_top_k == 50
+    assert s.hybrid_namespace == "hybrid"
+    assert s.bm25_params_path.endswith("bm25_params.json")

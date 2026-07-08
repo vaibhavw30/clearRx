@@ -36,6 +36,14 @@ class Settings(BaseSettings):
     chunk_recursive_size: int = 300
     chunk_recursive_overlap: int = 60
     semantic_threshold_percentile: float = 85.0
+    rerank_provider: str = "local"
+    rerank_model_local: str = "BAAI/bge-reranker-base"
+    cohere_api_key: str = ""
+    cohere_rerank_model: str = "rerank-english-v3.0"
+    hybrid_alphas: list[float] = [0.0, 0.25, 0.5, 0.75, 1.0]
+    hybrid_top_k: int = 50
+    hybrid_namespace: str = "hybrid"
+    bm25_params_path: str = os.path.normpath(os.path.join(_DATA, "bm25_params.json"))
 
 
 @lru_cache(maxsize=1)
