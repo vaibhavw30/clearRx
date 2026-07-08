@@ -39,3 +39,11 @@ def test_pinecone_key_read_from_env(monkeypatch):
     from app.config import Settings
     monkeypatch.setenv("PINECONE_API_KEY", "pc-xyz")
     assert Settings().pinecone_api_key == "pc-xyz"
+
+
+def test_phase2_chunking_settings_defaults():
+    from app.config import Settings
+    s = Settings()
+    assert s.chunk_recursive_size == 300
+    assert s.chunk_recursive_overlap == 60
+    assert s.semantic_threshold_percentile == 85.0

@@ -33,6 +33,10 @@ class Settings(BaseSettings):
     ollama_base_url: str = "http://localhost:11434"
     openai_api_key: str = ""
 
+    chunk_recursive_size: int = 300
+    chunk_recursive_overlap: int = 60
+    semantic_threshold_percentile: float = 85.0
+
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
