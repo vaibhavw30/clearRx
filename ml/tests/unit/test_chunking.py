@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from app.rag.chunking import FixedSizeChunker, chunk_metadata
+from app.rag.chunking import FixedSizeChunker, RecursiveChunker, chunk_metadata
 from app.rag.models import Monograph
 
 
@@ -36,3 +36,44 @@ def test_short_section_is_single_chunk():
     chunks = FixedSizeChunker(chunk_size=8, overlap=2).chunk(_mono())
     mech = [c for c in chunks if c.section == "mechanism"]
     assert len(mech) == 1 and mech[0].text == "short text"
+
+
+class FakeSplitter:
+    """Stands in for LangChain's RecursiveCharacterTextSplitter."""
+    def __init__(self):
+        self.seen = None
+    def split_text(self, text):
+        self.seen = text
+        return ["piece one", "piece two"]
+
+
+def _doc():
+    return Monograph(
+        id="int_a_b", drug_a="a", drug_b="b", drug_class_a="x", drug_class_b="y",
+        severity="high",
+        sections={"summary": "a and b interact", "management": "avoid combining"},
+    )
+
+
+def test_recursive_chunker_uses_splitter_over_whole_document():
+    fake = FakeSplitter()
+    chunker = RecursiveChunker(splitter=fake)
+    chunks = chunker.chunk(_doc())
+    assert chunker.name == "recursive"
+    assert [c.text for c in chunks] == ["piece one", "piece two"]
+    # whole-document input: both section texts are present in what the splitter saw
+    assert "a and b interact" in fake.seen and "avoid combining" in fake.seen
+    assert [c.chunk_index for c in chunks] == [0, 1]
+    for c in chunks:
+        assert c.source_doc_id == "int_a_b"
+        assert c.section == "document"
+        assert c.metadata["severity"] == "high"
+        assert "a" in c.metadata["drugs_mentioned"]
+
+
+def test_recursive_chunker_drops_empty_pieces():
+    class Emptyish:
+        def split_text(self, text):
+            return ["real chunk", "   ", ""]
+    chunks = RecursiveChunker(splitter=Emptyish()).chunk(_doc())
+    assert [c.text for c in chunks] == ["real chunk"]
