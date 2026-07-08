@@ -9,6 +9,7 @@ class Record(BaseModel):
     id: str
     values: list[float]
     metadata: dict
+    sparse_values: Optional[dict] = None
 
 
 class Match(BaseModel):
@@ -20,7 +21,8 @@ class Match(BaseModel):
 class VectorStore(Protocol):
     def upsert(self, records: list[Record], namespace: str) -> None: ...
     def query(
-        self, dense: list[float], top_k: int, flt: Optional[dict], namespace: str
+        self, dense: list[float], top_k: int, flt: Optional[dict], namespace: str,
+        sparse: Optional[dict] = None,
     ) -> list[Match]: ...
 
 
@@ -60,21 +62,28 @@ class PineconeStore:
             )
 
     def upsert(self, records: list[Record], namespace: str) -> None:
-        vectors = [
-            {"id": r.id, "values": list(r.values), "metadata": r.metadata} for r in records
-        ]
+        vectors = []
+        for r in records:
+            vec = {"id": r.id, "values": list(r.values), "metadata": r.metadata}
+            if r.sparse_values is not None:
+                vec["sparse_values"] = r.sparse_values
+            vectors.append(vec)
         self._idx().upsert(vectors=vectors, namespace=namespace)
 
     def query(
-        self, dense: list[float], top_k: int, flt: Optional[dict], namespace: str
+        self, dense: list[float], top_k: int, flt: Optional[dict], namespace: str,
+        sparse: Optional[dict] = None,
     ) -> list[Match]:
-        res = self._idx().query(
-            vector=list(dense),
-            top_k=top_k,
-            include_metadata=True,
-            filter=flt,
-            namespace=namespace,
-        )
+        if sparse is not None:
+            res = self._idx().query(
+                vector=list(dense), sparse_vector=sparse, top_k=top_k,
+                include_metadata=True, filter=flt, namespace=namespace,
+            )
+        else:
+            res = self._idx().query(
+                vector=list(dense), top_k=top_k, include_metadata=True,
+                filter=flt, namespace=namespace,
+            )
         matches = res["matches"] if isinstance(res, dict) else res.matches
         out: list[Match] = []
         for m in matches:

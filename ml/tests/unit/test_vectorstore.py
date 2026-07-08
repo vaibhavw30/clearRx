@@ -46,3 +46,43 @@ def test_query_returns_match_objects():
     assert idx.queries[0]["top_k"] == 5
     assert idx.queries[0]["include_metadata"] is True   # store always requests metadata
     assert idx.queries[0]["filter"] is None
+
+
+class _SparseFakeIndex:
+    def __init__(self):
+        self.upserted = None
+        self.queried = None
+    def upsert(self, vectors, namespace):
+        self.upserted = (vectors, namespace)
+    def query(self, **kw):
+        self.queried = kw
+        return {"matches": [{"id": "d::s::0", "score": 1.0,
+                             "metadata": {"source_doc_id": "d"}}]}
+
+
+def test_upsert_includes_sparse_when_present():
+    idx = _SparseFakeIndex()
+    PineconeStore("k", "i", index=idx).upsert(
+        [Record(id="x", values=[0.1], sparse_values={"indices": [1], "values": [0.5]}, metadata={})],
+        namespace="hybrid")
+    assert idx.upserted[0][0]["sparse_values"] == {"indices": [1], "values": [0.5]}
+
+
+def test_upsert_omits_sparse_when_none():
+    idx = _SparseFakeIndex()
+    PineconeStore("k", "i", index=idx).upsert(
+        [Record(id="x", values=[0.1], metadata={})], namespace="curated")
+    assert "sparse_values" not in idx.upserted[0][0]
+
+
+def test_query_passes_sparse_vector():
+    idx = _SparseFakeIndex()
+    PineconeStore("k", "i", index=idx).query(
+        [0.1], top_k=5, flt=None, namespace="hybrid", sparse={"indices": [1], "values": [0.5]})
+    assert idx.queried["sparse_vector"] == {"indices": [1], "values": [0.5]}
+
+
+def test_query_dense_only_omits_sparse_vector():
+    idx = _SparseFakeIndex()
+    PineconeStore("k", "i", index=idx).query([0.1], top_k=5, flt=None, namespace="curated")
+    assert "sparse_vector" not in idx.queried
