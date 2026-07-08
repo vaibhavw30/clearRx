@@ -31,8 +31,11 @@ Phase 1b must already be run (deps installed, `PINECONE_API_KEY` set, `python -m
 | `ml/requirements.txt` | deps | Modify: add `langchain-text-splitters` |
 | `ml/app/config.py` | settings | Modify: recursive size/overlap, semantic percentile |
 | `ml/app/rag/chunking.py` | chunkers | Modify: add `RecursiveChunker`, `SemanticChunker`, `build_chunkers` |
+| `ml/app/eval/aggregate.py` | shared retrieval-aggregation helpers | Create |
+| `ml/app/eval/runner.py` | eval runner | Modify: import shared helpers instead of local defs |
 | `ml/scripts/run_chunking_experiment.py` | experiment harness | Create |
 | `ml/tests/unit/test_chunking.py` | chunker unit tests | Modify: add recursive/semantic/factory tests |
+| `ml/tests/unit/test_aggregate.py` | shared-helper unit tests | Create |
 | `ml/tests/unit/test_chunking_experiment.py` | harness unit tests | Create |
 | `ml/tests/unit/test_config.py` | config defaults | Modify: assert new fields |
 
@@ -436,9 +439,99 @@ git commit -m "feat(ml): add chunker factory (fixed/recursive/semantic)"
 
 ---
 
-### Task 5: Chunking experiment harness
+### Task 5: Extract shared retrieval-aggregation helpers
 
-A script that, per strategy, re-indexes the corpus into a dedicated namespace, runs a **retrieval-only** eval, and reports a comparison table plus the winner. The pure pieces (`evaluate_retrieval`, `compare_strategies`, `pick_winner`) are unit-tested with fakes; `main()` is the live run (deferred to the provisioned machine).
+The chunking harness (next task) needs the same document-dedup and mean logic the eval runner already uses. Rather than duplicate them, promote `runner.py`'s private `_distinct_doc_ids` and `_mean` into a shared module both import.
+
+**Files:**
+- Create: `ml/app/eval/aggregate.py`
+- Modify: `ml/app/eval/runner.py`
+- Test: `ml/tests/unit/test_aggregate.py`
+
+**Interfaces:**
+- Produces: `def distinct_doc_ids(chunks) -> list[str]` (first-seen, order-preserving dedup of `source_doc_id`) and `def mean(xs: list[float]) -> float` (`0.0` on empty) in `app/eval/aggregate.py`.
+- `runner.py` imports both and drops its local `_distinct_doc_ids`/`_mean`; `_mean_where` stays in `runner.py` (runner-specific, operates on row dicts). Existing `tests/unit/test_runner.py` is the regression guard — it must stay green unchanged.
+
+- [ ] **Step 1: Write the failing test**
+
+Create `ml/tests/unit/test_aggregate.py`:
+
+```python
+from __future__ import annotations
+
+from app.eval.aggregate import distinct_doc_ids, mean
+from app.rag.models import Chunk
+
+
+def test_mean_of_values_and_empty():
+    assert mean([1.0, 2.0, 3.0]) == 2.0
+    assert mean([]) == 0.0
+
+
+def test_distinct_doc_ids_preserves_first_seen_order():
+    chunks = [
+        Chunk(text="a", source_doc_id="d2", section="s", chunk_index=0),
+        Chunk(text="b", source_doc_id="d1", section="s", chunk_index=1),
+        Chunk(text="c", source_doc_id="d2", section="s", chunk_index=2),
+    ]
+    assert distinct_doc_ids(chunks) == ["d2", "d1"]
+```
+
+- [ ] **Step 2: Run test to verify it fails**
+
+Run: `python -m pytest tests/unit/test_aggregate.py -v`
+Expected: FAIL — `ModuleNotFoundError: No module named 'app.eval.aggregate'`
+
+- [ ] **Step 3: Implement**
+
+Create `ml/app/eval/aggregate.py`:
+
+```python
+from __future__ import annotations
+
+
+def mean(xs: list[float]) -> float:
+    return sum(xs) / len(xs) if xs else 0.0
+
+
+def distinct_doc_ids(chunks) -> list[str]:
+    """Collapse retrieved chunks to distinct source docs in first-seen order.
+    Relevance is judged at the document level, so doc-level ranking metrics
+    must see each document once, at the rank of its best (first) chunk."""
+    ordered: list[str] = []
+    seen: set = set()
+    for c in chunks:
+        if c.source_doc_id not in seen:
+            seen.add(c.source_doc_id)
+            ordered.append(c.source_doc_id)
+    return ordered
+```
+
+In `ml/app/eval/runner.py`, add to the existing `app.eval` imports:
+
+```python
+from app.eval.aggregate import distinct_doc_ids, mean
+```
+
+Then delete the local `def _mean(...)` and `def _distinct_doc_ids(...)` definitions (keep `_mean_where`), and update every call site in the file: `_mean(` → `mean(`, `_distinct_doc_ids(` → `distinct_doc_ids(`.
+
+- [ ] **Step 4: Run tests to verify they pass**
+
+Run: `python -m pytest tests/unit/test_aggregate.py tests/unit/test_runner.py -v`
+Expected: PASS — new aggregate tests plus all pre-existing runner tests (behavior unchanged; the helpers just moved).
+
+- [ ] **Step 5: Commit**
+
+```bash
+git add app/eval/aggregate.py app/eval/runner.py tests/unit/test_aggregate.py
+git commit -m "refactor(ml): extract shared retrieval-aggregation helpers"
+```
+
+---
+
+### Task 6: Chunking experiment harness
+
+A script that, per strategy, re-indexes the corpus into a dedicated namespace, runs a **retrieval-only** eval, and reports a comparison table plus the winner. The pure pieces (`evaluate_retrieval`, `compare_strategies`, `pick_winner`) are unit-tested with fakes; `main()` is the live run (deferred to the provisioned machine). It imports `distinct_doc_ids`/`mean` from `app/eval/aggregate.py` (Task 5) rather than redefining them.
 
 **Files:**
 - Create: `ml/scripts/run_chunking_experiment.py`
@@ -535,6 +628,7 @@ import json
 import os
 
 from app.config import get_settings
+from app.eval.aggregate import distinct_doc_ids, mean
 from app.eval.dataset import load_queries
 from app.eval.metrics import (
     ndcg_at_k, precision_at_k, recall_at_k, reciprocal_rank, retrieval_coverage,
@@ -548,26 +642,12 @@ from app.rag.vectorstore import PineconeStore
 _METRICS = ["retrieval_coverage", "precision_at_k", "recall_at_k", "mrr", "ndcg"]
 
 
-def _mean(xs: list[float]) -> float:
-    return sum(xs) / len(xs) if xs else 0.0
-
-
-def _distinct_doc_ids(chunks) -> list[str]:
-    ordered: list[str] = []
-    seen: set = set()
-    for c in chunks:
-        if c.source_doc_id not in seen:
-            seen.add(c.source_doc_id)
-            ordered.append(c.source_doc_id)
-    return ordered
-
-
 def evaluate_retrieval(retriever, queries: list, k: int) -> dict:
     cov, prec, rec, mrr, ndcg = [], [], [], [], []
     gradable = 0
     for q in queries:
         chunks = retriever.retrieve(q.query, k)
-        ids = _distinct_doc_ids(chunks)
+        ids = distinct_doc_ids(chunks)
         relevant = set(q.expected_doc_ids)
         if q.expected_retrieval_topics:
             cov.append(retrieval_coverage(q.expected_retrieval_topics, [c.text for c in chunks]))
@@ -578,11 +658,11 @@ def evaluate_retrieval(retriever, queries: list, k: int) -> dict:
             mrr.append(reciprocal_rank(ids, relevant))
             ndcg.append(ndcg_at_k(ids, relevant, k))
     return {
-        "retrieval_coverage": _mean(cov),
-        "precision_at_k": _mean(prec),
-        "recall_at_k": _mean(rec),
-        "mrr": _mean(mrr),
-        "ndcg": _mean(ndcg),
+        "retrieval_coverage": mean(cov),
+        "precision_at_k": mean(prec),
+        "recall_at_k": mean(rec),
+        "mrr": mean(mrr),
+        "ndcg": mean(ndcg),
         "n_queries": float(len(queries)),
         "n_retrieval_gradable": float(gradable),
     }
@@ -670,7 +750,7 @@ git commit -m "feat(ml): add retrieval-only chunking experiment harness"
 
 ---
 
-## Operator run book (on the provisioned machine, after all 5 tasks)
+## Operator run book (on the provisioned machine, after all 6 tasks)
 
 Phase 1b must already have been run once (index created, deps installed).
 
@@ -694,7 +774,7 @@ This writes `eval/reports/chunking.{json,md}` — a per-strategy retrieval-metri
 
 ## Self-Review
 
-- **Spec coverage (design §8 Step 3):** three chunkers — fixed (existing), recursive (Task 2), semantic (Task 3); factory (Task 4); re-index + eval each and compare with the coverage/precision/recall/mrr/nDCG delta (Task 5); empirical winner selection + honest-flat-result handling (run book). LangChain `RecursiveCharacterTextSplitter` used per the build doc's Step 3.
+- **Spec coverage (design §8 Step 3):** three chunkers — fixed (existing), recursive (Task 2), semantic (Task 3); factory (Task 4); shared aggregation helpers extracted (Task 5); re-index + eval each and compare with the coverage/precision/recall/mrr/nDCG delta (Task 6); empirical winner selection + honest-flat-result handling (run book). LangChain `RecursiveCharacterTextSplitter` used per the build doc's Step 3.
 - **Deferred / out of scope:** hybrid + rerank (Phase 3), streaming (Phase 4), README debrief (Phase 5). Generation/judge are intentionally excluded from the experiment (retrieval-only), which the plan states and justifies.
 - **Placeholder scan:** none — every module and its primary unit test carry complete, runnable code.
 - **Type consistency:** `Chunker.name`/`chunk(doc)`, `RecursiveChunker(chunk_size, overlap, *, splitter)`, `SemanticChunker(embedder, threshold_percentile)`, `build_chunkers(settings, embedder)`, and the harness's `evaluate_retrieval(retriever, queries, k)` / `compare_strategies(results)` / `pick_winner(results, metric, tiebreak)` are used identically across tasks. Chunk fields (`text`/`source_doc_id`/`section`/`chunk_index`/`metadata`) and the `section="document"` convention match `app/rag/models.py` and what `build_records` (Phase 1b) writes. The gating logic in `evaluate_retrieval` mirrors the Phase 1b runner (ranking metrics over `expected_doc_ids`-bearing queries, coverage over `expected_retrieval_topics`-bearing queries).
