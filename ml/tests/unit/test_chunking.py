@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from app.rag.chunking import FixedSizeChunker, RecursiveChunker, chunk_metadata
+import numpy as np
+
+from app.rag.chunking import FixedSizeChunker, RecursiveChunker, SemanticChunker, chunk_metadata
 from app.rag.models import Monograph
 
 
@@ -77,3 +79,53 @@ def test_recursive_chunker_drops_empty_pieces():
             return ["real chunk", "   ", ""]
     chunks = RecursiveChunker(splitter=Emptyish()).chunk(_doc())
     assert [c.text for c in chunks] == ["real chunk"]
+
+
+class ClusterEmbedder:
+    """Maps sentences to one of two orthogonal unit vectors based on a keyword,
+    so a semantic boundary falls exactly between the two groups."""
+    dimension = 2
+
+    def embed(self, texts):
+        rows = []
+        for t in texts:
+            rows.append([1.0, 0.0] if "alpha" in t else [0.0, 1.0])
+        return np.array(rows, dtype=np.float32)
+
+    def embed_query(self, text):
+        return np.array([1.0, 0.0], dtype=np.float32)
+
+
+def _two_topic_doc():
+    return Monograph(
+        id="int_a_b", drug_a="a", drug_b="b", drug_class_a="x", drug_class_b="y",
+        severity="moderate",
+        sections={
+            "summary": "First alpha sentence here. Second alpha sentence here.",
+            "mechanism": "First beta sentence here. Second beta sentence here.",
+        },
+    )
+
+
+def test_semantic_chunker_breaks_at_topic_boundary():
+    chunker = SemanticChunker(ClusterEmbedder(), threshold_percentile=85.0)
+    chunks = chunker.chunk(_two_topic_doc())
+    assert chunker.name == "semantic"
+    # the two alpha sentences group together; the two beta sentences group together
+    assert len(chunks) == 2
+    assert "alpha" in chunks[0].text and "beta" not in chunks[0].text
+    assert "beta" in chunks[1].text and "alpha" not in chunks[1].text
+    for c in chunks:
+        assert c.source_doc_id == "int_a_b"
+        assert c.section == "document"
+        assert c.metadata["severity"] == "moderate"
+
+
+def test_semantic_chunker_single_sentence_is_one_chunk():
+    doc = Monograph(
+        id="int_c_d", drug_a="c", drug_b="d", drug_class_a="x", drug_class_b="y",
+        severity="low", sections={"summary": "Only one sentence"},
+    )
+    chunks = SemanticChunker(ClusterEmbedder()).chunk(doc)
+    assert len(chunks) == 1
+    assert chunks[0].text == "Only one sentence"

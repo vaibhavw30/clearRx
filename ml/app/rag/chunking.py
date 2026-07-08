@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import re
+
+import numpy as np
 from typing import Protocol
 
 from app.rag.models import Chunk, Monograph
@@ -95,4 +98,55 @@ class RecursiveChunker:
                 metadata=dict(md),
             )
             for i, piece in enumerate(pieces)
+        ]
+
+
+_SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+")
+
+
+class SemanticChunker:
+    """Semantic-breakpoint chunking over the whole monograph. Sentences are
+    embedded; a boundary is placed wherever the cosine distance between
+    consecutive sentences reaches the configured percentile of all such
+    distances. Embeddings are assumed L2-normalized, so cosine distance is
+    1 - dot product."""
+
+    name = "semantic"
+
+    def __init__(self, embedder, threshold_percentile: float = 85.0) -> None:
+        self.embedder = embedder
+        self.threshold_percentile = threshold_percentile
+
+    def _sentences(self, text: str) -> list[str]:
+        return [s.strip() for s in _SENTENCE_SPLIT.split(text) if s.strip()]
+
+    def chunk(self, doc: Monograph) -> list[Chunk]:
+        md = chunk_metadata(doc)
+        text = " ".join(body for body in doc.sections.values() if body.strip())
+        sentences = self._sentences(text)
+        if not sentences:
+            return []
+        if len(sentences) == 1:
+            return [Chunk(text=sentences[0], source_doc_id=doc.id, section="document",
+                          chunk_index=0, metadata=dict(md))]
+
+        vecs = self.embedder.embed(sentences)
+        distances = [
+            1.0 - float(np.dot(vecs[i], vecs[i + 1])) for i in range(len(sentences) - 1)
+        ]
+        threshold = float(np.percentile(distances, self.threshold_percentile))
+
+        groups: list[list[str]] = [[sentences[0]]]
+        for i, dist in enumerate(distances):
+            if threshold > 0 and dist >= threshold:
+                groups.append([sentences[i + 1]])
+            else:
+                groups[-1].append(sentences[i + 1])
+
+        texts = [" ".join(g).strip() for g in groups]
+        return [
+            Chunk(text=t, source_doc_id=doc.id, section="document", chunk_index=i,
+                  metadata=dict(md))
+            for i, t in enumerate(texts)
+            if t
         ]
