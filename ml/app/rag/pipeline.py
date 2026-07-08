@@ -5,6 +5,7 @@ from typing import Protocol
 from app.rag.embeddings import Embedder
 from app.rag.generator import LLMClient
 from app.rag.models import Chunk
+from app.rag.retrieval import chunks_from_matches
 from app.rag.vectorstore import VectorStore
 
 
@@ -52,19 +53,7 @@ class DenseRagPipeline:
         matches = self.store.query(
             vec.tolist(), top_k=k, flt=None, namespace=self.namespace
         )
-        chunks: list[Chunk] = []
-        for m in matches:
-            md = m.metadata
-            chunks.append(
-                Chunk(
-                    text=md.get("chunk_text", ""),
-                    source_doc_id=md.get("source_doc_id", ""),
-                    section=md.get("section", ""),
-                    chunk_index=int(md.get("chunk_index", 0)),
-                    metadata=md,
-                )
-            )
-        return chunks
+        return chunks_from_matches(matches)
 
     def generate(self, query: str, chunks: list[Chunk]) -> str:
         if not chunks:
