@@ -22,13 +22,13 @@ Consequence: "add SSE streaming" is not a small change — there is no RAG answe
 |---|---|
 | Reach | **Full stack** — ML service + Express passthrough + frontend UI. |
 | Topology | **Replace legacy** — `app/main.py` becomes the single ML FastAPI service; `ml/main.py` is deleted. |
-| Legacy endpoints | **Port existing behavior** of the dashboard-used routes (`/health`, `/interactions/check-enhanced`, `/drugs`, `/drugs/{name}`) onto `app/main.py` with response shapes **unchanged** — no regression. Interaction-check is NOT re-implemented on the RAG pipeline this phase (separate concern); `/query` is the new RAG surface. |
+| Legacy endpoints | **Re-point onto RAG.** The dashboard-used routes keep their **response contracts** but are re-implemented on the corpus/pipeline: `/interactions/check-enhanced` retrieves the drug-pair's monograph and maps it into the existing `InteractionResponse` shape (severity from monograph metadata, grounded description, real citations as `sources`, `method="rag"`); `/drugs` + `/drugs/{name}` serve the curated corpus. This **deletes the FAISS/MiniLM/gpt-4o-mini engine** (the rebuild's whole point) rather than porting it. Behavior improves (grounded), the contract is preserved so the dashboard keeps working. |
 | Execution | **Layered, sequenced:** 4a ML service → 4b Express → 4c frontend, each independently testable. |
 | Streaming | FastAPI `StreamingResponse` SSE (`text/event-stream`); token frames + a final citations event + `[DONE]`. |
 
 ## 3. Non-goals
 
-- No re-backing of `/interactions/check-enhanced` on the RAG pipeline (behavior preserved as-is).
+- No change to the `InteractionResponse`/`HealthResponse` response *contracts* the dashboard already consumes (only the implementation behind them changes, from FAISS to RAG).
 - No new clinical claims; the medical disclaimer stays in the answer path.
 - No auth/session changes; the new query endpoint follows the existing unauthenticated dev pattern of the other routes.
 - Live streaming answers require Ollama (provisioned machine); offline tests use a fake `LLMClient`.
@@ -39,13 +39,13 @@ Consequence: "add SSE streaming" is not a small change — there is no RAG answe
 
 | New / changed | Responsibility |
 |---|---|
-| `app/schemas.py` *(new)* | pydantic models: `QueryRequest{query: str, top_k: int = 5}`, `Citation{source_doc_id: str, section: str \| None, url: str \| None}`, `QueryResponse{answer: str, citations: list[Citation]}`, `HealthResponse`, and the ported legacy `InteractionRequest`/`InteractionResponse` shapes (verbatim from `ml/main.py`). |
+| `app/schemas.py` *(new)* | pydantic models: `QueryRequest{query: str, top_k: int = 5}`, `Citation{source_doc_id: str, section: str \| None, url: str \| None}`, `QueryResponse{answer: str, citations: list[Citation]}`, `HealthResponse`, and the `EnhancedInteractionRequest`/`InteractionResponse` shapes copied verbatim from `ml/main.py` (same contract the dashboard consumes). |
 | `app/deps.py` *(new)* | Builds the retriever (dense per settings; hybrid is a later swap) + `OllamaClient` from `Settings`; exposed as FastAPI dependencies (`get_retriever`, `get_llm`) so tests override them with fakes via `app.dependency_overrides`. |
-| `app/main.py` *(new)* | Thin FastAPI app + routes only (no business logic): `GET /health`, `POST /query`, `POST /query/stream`, ported `POST /interactions/check-enhanced`, `GET /drugs`, `GET /drugs/{name}`. |
-| `app/answer.py` *(new)* | Pure helpers: `citations_from_chunks(chunks) -> list[Citation]` (distinct source docs, first-seen order, url from metadata `source_url`) and `sse_frame(data, event=None) -> str`. Reuses `build_prompt`/`build_context` from `rag/pipeline.py`. |
-| `ml/main.py` *(delete)* | Legacy FAISS app retired once its needed routes are ported. |
+| `app/main.py` *(new)* | Thin FastAPI app + routes only (no business logic): `GET /health`, `POST /query`, `POST /query/stream`, RAG-backed `POST /interactions/check-enhanced`, corpus-backed `GET /drugs`, `GET /drugs/{name}`. |
+| `app/answer.py` *(new)* | Pure helpers: `citations_from_chunks(chunks) -> list[Citation]` (distinct source docs, first-seen order, url from metadata `source_url`); `sse_frame(data, event=None) -> str`; `build_interaction_response(chunks, answer) -> InteractionResponse` (severity from top chunk's `severity` metadata, `description`=grounded answer, `recommendation`=a retrieved `management`-section chunk or a safe fallback, `sources`=citation ids/urls, `method="rag"`, coarse `confidence`). Reuses `build_prompt`/`build_context` from `rag/pipeline.py`. |
+| `ml/main.py` *(delete)* | Legacy FAISS/MiniLM/gpt-4o-mini engine deleted after the RAG-backed routes pass. |
 
-The route logic: `chunks = retriever.retrieve(query, top_k)` → `prompt = build_prompt(query, chunks)` → non-stream `llm.generate(prompt)`; stream `llm.stream(prompt)`. Citations derive from `chunks` via `citations_from_chunks`.
+The `/query` route logic: `chunks = retriever.retrieve(query, top_k)` → `prompt = build_prompt(query, chunks)` → non-stream `llm.generate(prompt)`; stream `llm.stream(prompt)`. Citations derive from `chunks` via `citations_from_chunks`. `/interactions/check-enhanced` builds a drug-pair query from `drugA`/`drugB`, retrieves + generates, and maps via `build_interaction_response`. `/drugs` + `/drugs/{name}` read the corpus (`load_corpus`) — fully offline, no live deps.
 
 ### 4b — Express (`api/server.js`)
 
