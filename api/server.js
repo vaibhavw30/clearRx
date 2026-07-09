@@ -526,6 +526,27 @@ app.post('/api/query', async (req, res) => {
   }
 });
 
+// Proxy: streamed RAG query -> ML /query/stream, piped through as SSE
+app.post('/api/query/stream', async (req, res) => {
+  try {
+    const mlServiceUrl = process.env.ML_BASE || 'http://localhost:8000';
+    const mlResponse = await fetch(`${mlServiceUrl}/query/stream`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(req.body),
+    });
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders();
+    mlResponse.body.on('error', () => res.end());
+    mlResponse.body.pipe(res);
+  } catch (error) {
+    console.error('Error proxying /api/query/stream:', error.message);
+    res.status(502).json({ error: 'ML service unavailable' });
+  }
+});
+
 // Error handling middleware
 app.use((error, req, res, next) => {
   console.error('Unhandled error:', error);
