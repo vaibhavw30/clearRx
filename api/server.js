@@ -521,8 +521,12 @@ app.use((req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`🚀 DDI Assistant API running on port ${PORT}`);
-  console.log(`📊 Health check: http://localhost:${PORT}/api/health`);
-  console.log(`🔗 ML Service: ${process.env.ML_BASE || 'http://localhost:8000'}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`🚀 DDI Assistant API running on port ${PORT}`);
+    console.log(`📊 Health check: http://localhost:${PORT}/api/health`);
+    console.log(`🔗 ML Service: ${process.env.ML_BASE || 'http://localhost:8000'}`);
+  });
+}
+
+export default app;
