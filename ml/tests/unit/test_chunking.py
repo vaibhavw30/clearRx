@@ -122,6 +122,43 @@ def test_semantic_chunker_breaks_at_topic_boundary():
         assert c.metadata["severity"] == "moderate"
 
 
+class GradedEmbedder:
+    """Within-topic sentences map to near (small, non-zero distance) unit
+    vectors; the cross-topic jump is large. Lets a test assert the percentile
+    threshold splits only at the big boundary, not at every non-zero distance."""
+    dimension = 2
+    _VECS = {
+        "a0": [1.0, 0.0], "a1": [0.9997, 0.0245], "a2": [0.9986, 0.0523],
+        "b0": [0.0, 1.0], "b1": [0.0245, 0.9997],
+    }
+
+    def embed(self, texts):
+        rows = [self._VECS[next(k for k in self._VECS if k in t)] for t in texts]
+        return np.array(rows, dtype=np.float32)
+
+    def embed_query(self, text):
+        return np.array([1.0, 0.0], dtype=np.float32)
+
+
+def test_semantic_chunker_percentile_filters_small_distances():
+    # Three topic-A sentences have small but NON-ZERO consecutive distances; only
+    # the A->B jump exceeds the 85th-percentile threshold. The chunker must split
+    # ONLY at the topic boundary — a real discriminator for the percentile logic,
+    # not just "split wherever the distance is non-zero".
+    doc = Monograph(
+        id="int_a_b", drug_a="a", drug_b="b", drug_class_a="x", drug_class_b="y",
+        severity="high",
+        sections={
+            "summary": "Topic a0 here. Topic a1 here. Topic a2 here.",
+            "mechanism": "Topic b0 here. Topic b1 here.",
+        },
+    )
+    chunks = SemanticChunker(GradedEmbedder(), threshold_percentile=85.0).chunk(doc)
+    assert len(chunks) == 2
+    assert all(m in chunks[0].text for m in ("a0", "a1", "a2"))  # small distances didn't split
+    assert "b0" in chunks[1].text and "b1" in chunks[1].text
+
+
 def test_semantic_chunker_single_sentence_is_one_chunk():
     doc = Monograph(
         id="int_c_d", drug_a="c", drug_b="d", drug_class_a="x", drug_class_b="y",

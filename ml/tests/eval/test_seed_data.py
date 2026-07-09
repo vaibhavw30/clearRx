@@ -40,8 +40,10 @@ def test_baseline_runs_end_to_end_offline():
     runner = EvalRunner(KeywordBaseline(docs), _AllTrueJudge(), k=5, clock=lambda: 0.0)
     report = runner.run(queries)
     assert 0.0 <= report.aggregate["recall_at_k"] <= 1.0
-    # the keyword baseline should retrieve the right doc for most queries
-    assert report.aggregate["recall_at_k"] > 0.4
+    # the keyword baseline should retrieve the right doc for most queries.
+    # Floor kept well below the captured baseline (~0.57) so future corpus growth
+    # that adds keyword-overlap distractors doesn't false-fail this smoke test.
+    assert report.aggregate["recall_at_k"] > 0.3
 
 
 def test_query_set_size_and_shape():

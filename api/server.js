@@ -18,6 +18,9 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '10mb' }));
 
+// Single-source the ML service base URL for all proxy calls.
+const mlUrl = (path) => `${process.env.ML_BASE || 'http://localhost:8000'}${path}`;
+
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -38,8 +41,7 @@ app.get('/api/health', async (req, res) => {
 
   // Test ML service connection and get detailed status
   try {
-    const mlServiceUrl = process.env.ML_BASE || 'http://localhost:8000';
-    const mlResponse = await fetch(`${mlServiceUrl}/health`, { timeout: 2000 });
+    const mlResponse = await fetch(mlUrl('/health'), { timeout: 2000 });
 
     if (mlResponse.ok) {
       mlServiceHealthy = true;
@@ -263,13 +265,12 @@ app.post('/api/patients/:id/drugs', async (req, res) => {
     }
 
     // Check for interactions with new drug
-    const interactionCheckUrl = process.env.ML_BASE || 'http://localhost:8000';
     let interactionResults = [];
 
     // Check new drug against each existing medication
     for (const existingMed of patient.medications || []) {
       try {
-        const mlResponse = await fetch(`${interactionCheckUrl}/interactions/check-enhanced`, {
+        const mlResponse = await fetch(mlUrl('/interactions/check-enhanced'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -423,8 +424,7 @@ app.post('/api/check-interactions', async (req, res) => {
     for (const [drugA, drugB] of pairs) {
       try {
         // First, try to call the ML service
-        const mlServiceUrl = process.env.ML_BASE || 'http://localhost:8000';
-        const mlResponse = await fetch(`${mlServiceUrl}/interactions/check`, {
+        const mlResponse = await fetch(mlUrl('/interactions/check'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ drugA, drugB }),
@@ -512,8 +512,7 @@ app.get('/api/patients/:id/interactions', async (req, res) => {
 // Proxy: free-text RAG query (non-streaming) -> ML /query
 app.post('/api/query', async (req, res) => {
   try {
-    const mlServiceUrl = process.env.ML_BASE || 'http://localhost:8000';
-    const mlResponse = await fetch(`${mlServiceUrl}/query`, {
+    const mlResponse = await fetch(mlUrl('/query'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(req.body),
@@ -529,8 +528,7 @@ app.post('/api/query', async (req, res) => {
 // Proxy: streamed RAG query -> ML /query/stream, piped through as SSE
 app.post('/api/query/stream', async (req, res) => {
   try {
-    const mlServiceUrl = process.env.ML_BASE || 'http://localhost:8000';
-    const mlResponse = await fetch(`${mlServiceUrl}/query/stream`, {
+    const mlResponse = await fetch(mlUrl('/query/stream'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(req.body),
