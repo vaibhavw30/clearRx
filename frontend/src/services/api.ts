@@ -1,4 +1,6 @@
 // API service for connecting to the Express backend
+import { createSSEParser } from '@/services/sse';
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
 
 export interface Patient {
@@ -41,6 +43,12 @@ export interface InteractionSummary {
 export interface InteractionResult {
   interactions: Interaction[];
   summary: InteractionSummary;
+}
+
+export interface Citation {
+  source_doc_id: string;
+  section?: string | null;
+  url?: string | null;
 }
 
 class ApiService {
@@ -140,6 +148,44 @@ class ApiService {
         stack: error instanceof Error ? error.stack : undefined,
       });
       throw error;
+    }
+  }
+
+  async streamQuery(
+    query: string,
+    handlers: {
+      onToken: (t: string) => void;
+      onCitations?: (c: Citation[]) => void;
+      onDone?: () => void;
+      onError?: (e: unknown) => void;
+    },
+  ): Promise<void> {
+    try {
+      const response = await fetch(`${this.baseUrl}/api/query/stream`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query }),
+      });
+      if (!response.ok || !response.body) {
+        handlers.onError?.(new Error(`stream request failed: ${response.status}`));
+        return;
+      }
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      const parser = createSSEParser();
+      let finished = false;
+      while (!finished) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        for (const ev of parser.feed(decoder.decode(value, { stream: true }))) {
+          if (ev.type === 'token') handlers.onToken(ev.data);
+          else if (ev.type === 'citations') handlers.onCitations?.(ev.data as Citation[]);
+          else if (ev.type === 'done') { handlers.onDone?.(); finished = true; }
+        }
+      }
+      if (!finished) handlers.onDone?.();
+    } catch (e) {
+      handlers.onError?.(e);
     }
   }
 
