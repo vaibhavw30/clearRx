@@ -509,6 +509,23 @@ app.get('/api/patients/:id/interactions', async (req, res) => {
   }
 });
 
+// Proxy: free-text RAG query (non-streaming) -> ML /query
+app.post('/api/query', async (req, res) => {
+  try {
+    const mlServiceUrl = process.env.ML_BASE || 'http://localhost:8000';
+    const mlResponse = await fetch(`${mlServiceUrl}/query`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(req.body),
+    });
+    const data = await mlResponse.json();
+    res.status(mlResponse.status).json(data);
+  } catch (error) {
+    console.error('Error proxying /api/query:', error.message);
+    res.status(502).json({ error: 'ML service unavailable' });
+  }
+});
+
 // Error handling middleware
 app.use((error, req, res, next) => {
   console.error('Unhandled error:', error);
