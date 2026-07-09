@@ -1,0 +1,10 @@
+# Minimal deps to run the OFFLINE test suite (tests/unit, tests/eval, tests/api).
+# Every heavy dep (pinecone, pinecone-text, cohere, sentence-transformers,
+# langchain, torch, faiss, openai, ollama) is lazy-imported inside methods and
+# stubbed with fakes in tests, so CI does not install them — keeping it fast.
+fastapi>=0.104.1
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+numpy>=1.24.3
+httpx>=0.25.2
+pytest>=8.0.0
