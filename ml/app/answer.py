@@ -9,6 +9,10 @@ _FALLBACK_RECOMMENDATION = (
     "Consult a pharmacist or physician before combining these medications."
 )
 
+# The corpus severity vocabulary (high/moderate/low) is mapped to the vocabulary
+# the dashboard + Express consume (severe/moderate/mild); unknown/missing stays "unknown".
+_SEVERITY_MAP = {"high": "severe", "moderate": "moderate", "low": "mild"}
+
 
 def citations_from_chunks(chunks: list[Chunk]) -> list[Citation]:
     cites: list[Citation] = []
@@ -42,7 +46,7 @@ def build_interaction_response(chunks: list[Chunk], answer: str) -> InteractionR
             confidence=0.0,
             method="rag",
         )
-    severity = chunks[0].metadata.get("severity", "unknown")
+    severity = _SEVERITY_MAP.get(chunks[0].metadata.get("severity", "unknown"), "unknown")
     management = next((c.text for c in chunks if c.section == "management"), None)
     cites = citations_from_chunks(chunks)
     sources = [c.url or c.source_doc_id for c in cites]

@@ -31,11 +31,18 @@ def test_build_interaction_response_maps_from_chunks():
         _chunk("int_warfarin_ibuprofen", "management", text="Avoid the combination."),
     ]
     r = build_interaction_response(chunks, answer="Increased bleeding risk.")
-    assert r.severity == "high"
+    assert r.severity == "severe"   # corpus "high" -> dashboard "severe"
     assert r.description == "Increased bleeding risk."
     assert r.recommendation == "Avoid the combination."   # from the management-section chunk
     assert r.sources == ["http://s"]                       # url preferred over id
     assert r.method == "rag" and r.confidence > 0.0
+
+
+def test_build_interaction_response_maps_severity_vocabulary():
+    # corpus vocabulary (high/moderate/low) -> dashboard vocabulary (severe/moderate/mild)
+    assert build_interaction_response([_chunk("int_x", "summary", severity="high")], "a").severity == "severe"
+    assert build_interaction_response([_chunk("int_x", "summary", severity="moderate")], "a").severity == "moderate"
+    assert build_interaction_response([_chunk("int_x", "summary", severity="low")], "a").severity == "mild"
 
 
 def test_build_interaction_response_no_chunks_is_safe():

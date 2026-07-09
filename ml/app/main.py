@@ -55,14 +55,25 @@ def query_stream(req: QueryRequest, retriever=Depends(get_retriever), llm=Depend
     return StreamingResponse(event_stream(), media_type="text/event-stream")
 
 
+def _run_interaction(drug_a: str, drug_b: str, retriever, llm) -> InteractionResponse:
+    query = f"{drug_a} with {drug_b} interaction"
+    chunks = retriever.retrieve(query, 5)
+    answer = llm.generate(build_prompt(query, chunks)) if chunks else ""
+    return build_interaction_response(chunks, answer)
+
+
+@app.post("/interactions/check", response_model=InteractionResponse)
+def check_interaction(
+    req: EnhancedInteractionRequest, retriever=Depends(get_retriever), llm=Depends(get_llm)
+) -> InteractionResponse:
+    return _run_interaction(req.drugA, req.drugB, retriever, llm)
+
+
 @app.post("/interactions/check-enhanced", response_model=InteractionResponse)
 def check_interaction_enhanced(
     req: EnhancedInteractionRequest, retriever=Depends(get_retriever), llm=Depends(get_llm)
 ) -> InteractionResponse:
-    query = f"{req.drugA} with {req.drugB} interaction"
-    chunks = retriever.retrieve(query, 5)
-    answer = llm.generate(build_prompt(query, chunks)) if chunks else ""
-    return build_interaction_response(chunks, answer)
+    return _run_interaction(req.drugA, req.drugB, retriever, llm)
 
 
 @app.get("/drugs")

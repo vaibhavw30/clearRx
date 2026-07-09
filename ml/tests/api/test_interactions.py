@@ -42,11 +42,21 @@ def test_interactions_check_enhanced_rag_backed(client):
                     json={"drugA": "warfarin", "drugB": "ibuprofen", "patientContext": {"age": 70}})
     assert r.status_code == 200
     body = r.json()
-    assert body["severity"] == "high"
+    assert body["severity"] == "severe"   # corpus "high" -> dashboard "severe"
     assert body["description"] == "Combining them raises bleeding risk."
     assert body["recommendation"].startswith("Avoid the combination")
     assert body["method"] == "rag"
     assert body["sources"] == ["http://s"]
+
+
+def test_interactions_check_non_enhanced_rag_backed(client):
+    # legacy /interactions/check (no patientContext) must still be served (Express calls it)
+    r = client.post("/interactions/check", json={"drugA": "warfarin", "drugB": "ibuprofen"})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["method"] == "rag"
+    assert body["severity"] == "severe"
+    assert body["description"] == "Combining them raises bleeding risk."
 
 
 def test_drugs_served_from_corpus():
