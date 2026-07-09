@@ -4,6 +4,7 @@ import { AlertCircle, CheckCircle, Info, Loader2, Plus, Search, X } from "lucide
 import { Patient, Interaction, InteractionSummary } from "@/types";
 import { apiService } from "@/services/api";
 import { Header } from "@/components/Header";
+import { AskClearRx } from "@/components/AskClearRx";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -282,6 +283,10 @@ const Dashboard = () => {
 
       <div className="container mx-auto px-4 py-8">
         {/* Service Status: logged to console instead of shown in UI */}
+
+        <div className="mb-6">
+          <AskClearRx />
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Patient Selection */}
