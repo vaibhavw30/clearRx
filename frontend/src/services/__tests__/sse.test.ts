@@ -13,6 +13,14 @@ describe('createSSEParser', () => {
     expect(p.feed('lo\n\n')).toEqual([{ type: 'token', data: 'hello' }]);
   });
 
+  it('preserves a multi-line token payload in one frame (no truncation)', () => {
+    const p = createSSEParser();
+    // the ML stream stub emits the whole (multi-line) answer as a single frame
+    expect(p.feed('data: line one\nline two\n\n')).toEqual([
+      { type: 'token', data: 'line one\nline two' },
+    ]);
+  });
+
   it('parses a citations event then done', () => {
     const p = createSSEParser();
     const evs = p.feed('event: citations\ndata: [{"source_doc_id":"int_x"}]\n\ndata: [DONE]\n\n');

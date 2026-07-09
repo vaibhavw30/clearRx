@@ -19,11 +19,14 @@ export function createSSEParser(): { feed(text: string): SSEEvent[] } {
         const frame = buffer.slice(0, idx);
         buffer = buffer.slice(idx + 2);
         if (!frame) continue;
-        const lines = frame.split('\n');
-        const isCitations = lines.some((l) => l.startsWith('event: citations'));
-        const dataLine = lines.find((l) => l.startsWith('data: '));
-        if (dataLine === undefined) continue;
-        const payload = dataLine.slice('data: '.length);
+        const isCitations = /(^|\n)event: citations/.test(frame);
+        // Take everything after the first line-anchored `data: ` as the payload,
+        // preserving embedded newlines — the ML stream can emit a whole
+        // multi-line answer in one frame, and reading only the first line would
+        // silently truncate it.
+        const match = frame.match(/(^|\n)data: /);
+        if (!match) continue;
+        const payload = frame.slice((match.index ?? 0) + match[0].length);
         if (isCitations) {
           events.push({ type: 'citations', data: JSON.parse(payload) });
         } else if (payload === '[DONE]') {
