@@ -32,7 +32,9 @@ class BM25SparseEncoder:
         return self._enc().encode_documents(texts)
 
     def encode_query(self, text: str) -> dict:
-        return self._enc().encode_query(text)
+        # pinecone-text exposes encode_queries (plural, list-in/list-out); we
+        # keep a single-query convenience method for the retriever.
+        return self._enc().encode_queries([text])[0]
 
     def dump(self, path: str) -> None:
         self._enc().dump(path)

@@ -12,8 +12,9 @@ class FakeBM25:
         self.fitted = list(corpus)
     def encode_documents(self, texts):
         return [{"indices": [1], "values": [0.5]} for _ in texts]
-    def encode_query(self, text):
-        return {"indices": [1], "values": [0.9]}
+    def encode_queries(self, texts):
+        # mirrors the real pinecone-text BM25Encoder API (plural, list-in/out)
+        return [{"indices": [1], "values": [0.9]} for _ in texts]
     def dump(self, path):
         self.dumped = path
     def load(self, path):
