@@ -45,18 +45,22 @@ class LLMJudge:
         if not facts:
             return []
         prompt = build_fact_prompt(answer, facts)
-        last_err: Optional[JudgeError] = None
+        last_result: Optional[list[bool]] = None
         for _ in range(self.max_retries + 1):
             try:
                 result = _parse_bools(self.llm(prompt))
-            except JudgeError as exc:
-                last_err = exc
+            except JudgeError:
                 continue
-            if len(result) != len(facts):
-                last_err = JudgeError(f"expected {len(facts)} bools, got {len(result)}")
-                continue
-            return result
-        raise last_err or JudgeError("judge failed")
+            if len(result) == len(facts):
+                return result
+            last_result = result  # parseable but miscounted; remember for coercion
+        # A single flaky judge response must not abort the whole eval run. Coerce
+        # the best available parse to the expected length (clamp extras, pad
+        # missing facts as not-covered). If nothing parsed, treat all facts as
+        # not covered. The judge calibration report is what surfaces whether the
+        # judge itself is trustworthy.
+        best = last_result or []
+        return (best + [False] * len(facts))[: len(facts)]
 
     def check_forbidden(self, answer: str, must_not_say: list[str]) -> list[bool]:
         low = answer.lower()

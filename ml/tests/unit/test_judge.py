@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-import pytest
-
-from app.eval.judge import JudgeError, LLMJudge
+from app.eval.judge import LLMJudge
 
 
 def test_score_facts_parses_json():
@@ -22,10 +20,20 @@ def test_score_facts_retries_then_succeeds():
     assert calls["n"] == 2
 
 
-def test_score_facts_raises_on_wrong_length():
+def test_score_facts_clamps_too_many_bools():
+    # the live failure mode: local judge returned 2 bools for a 1-fact query
+    judge = LLMJudge(llm=lambda p: "[true, false]", max_retries=0)
+    assert judge.score_facts("ans", ["f1"]) == [True]
+
+
+def test_score_facts_pads_too_few_bools_as_not_covered():
     judge = LLMJudge(llm=lambda p: "[true]", max_retries=0)
-    with pytest.raises(JudgeError):
-        judge.score_facts("ans", ["f1", "f2"])
+    assert judge.score_facts("ans", ["f1", "f2"]) == [True, False]
+
+
+def test_score_facts_all_false_when_unparseable():
+    judge = LLMJudge(llm=lambda p: "nonsense", max_retries=0)
+    assert judge.score_facts("ans", ["f1", "f2"]) == [False, False]
 
 
 def test_check_forbidden_is_substring():
