@@ -1,0 +1,32 @@
+{
+  "results": {
+    "fixed": {
+      "retrieval_coverage": 0.527027027027027,
+      "precision_at_k": 0.30945945945945946,
+      "recall_at_k": 0.8108108108108109,
+      "mrr": 0.7126126126126126,
+      "ndcg": 0.7372876234580787,
+      "n_queries": 47.0,
+      "n_retrieval_gradable": 37.0
+    },
+    "recursive": {
+      "retrieval_coverage": 0.5945945945945946,
+      "precision_at_k": 0.3824324324324325,
+      "recall_at_k": 0.9459459459459459,
+      "mrr": 0.8243243243243243,
+      "ndcg": 0.8555310477799267,
+      "n_queries": 47.0,
+      "n_retrieval_gradable": 37.0
+    },
+    "semantic": {
+      "retrieval_coverage": 0.6216216216216216,
+      "precision_at_k": 0.22522522522522523,
+      "recall_at_k": 0.8108108108108109,
+      "mrr": 0.7252252252252251,
+      "ndcg": 0.7474229396718186,
+      "n_queries": 47.0,
+      "n_retrieval_gradable": 37.0
+    }
+  },
+  "winner": "recursive"
+}
